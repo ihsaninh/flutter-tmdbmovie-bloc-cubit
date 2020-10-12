@@ -16,11 +16,8 @@ class PopularMovieCubit extends Cubit<PopularMovieState> {
     try {
       emit(PopularMovieLoadInProgress());
       final popularMovies = await repository.getPopularMovies();
-      print(popularMovies);
       emit(PopularMovieLoadSuccess(popularMovies));
     } catch (e) {
-
-      print(e);
       emit(PopularMovieLoadFailure());
     }
   }

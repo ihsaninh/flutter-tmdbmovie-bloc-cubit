@@ -5,6 +5,7 @@ import 'package:movie_app/configs/Config.dart';
 
 import 'package:movie_app/constants/Colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:movie_app/models/PopularMovie.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -46,87 +47,13 @@ class _HomeState extends State<Home> {
                 child: CircularProgressIndicator(),
               );
             } else if (state is PopularMovieLoadSuccess) {
-              print(state.popularMovies);
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Stack(
                     children: [
-                      CarouselSlider(
-                        items: state.popularMovies.map((item) => Container(
-                          child: Container(
-                            margin: EdgeInsets.all(5.0),
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                child: Stack(
-                                  children: <Widget>[
-                                    Image.network('${Config.baseImageUrl}${item.backdropPath}', fit: BoxFit.fill),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            end: Alignment(0.0, -1),
-                                            begin: Alignment(0.0, 0.4),
-                                            colors: <Color>[
-                                              Color(0x8A000000),
-                                              Colors.black12.withOpacity(0.0)
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      bottom: 24.0,
-                                      left: 10.0,
-                                      child: Text(
-                                        item.originalTitle,
-                                        style: TextStyle(
-                                          fontSize: 18.0,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                )
-                            ),
-                          ),
-                        )).toList(),
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          viewportFraction: 1.0,
-                          enlargeCenterPage: false,
-                          onPageChanged: (index, reason) {
-                            setState(() {
-                              _current = index;
-                            });
-                          }
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: state.popularMovies.map((item) {
-                            int index = state.popularMovies.indexOf(item);
-                            return Container(
-                              width: 5.0,
-                              height: 5.0,
-                              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 3.0),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: _current == index
-                                    ? ColorBase.mandy
-                                    : Color.fromRGBO(255, 255, 255, 0.4),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      )
+                      _buildCarouselSlider(state.popularMovies),
+                      _buildCarouselIndicator(state.popularMovies),
                     ],
                   ),
                 ],
@@ -139,69 +66,85 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-}
 
-// Widget getNewMoviees() {
-//   return SizedBox(height: 16.0),
-//     Padding(
-//       padding: EdgeInsets.all(16.0),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Text(
-//             'New Trailer',
-//             style: TextStyle(
-//               color: Colors.white,
-//               fontSize: 18
-//             ),
-//           ),
-//           Text(
-//             'See All',
-//             style: TextStyle(
-//               color: ColorBase.amethystSmoke,
-//               fontSize: 16.0
-//             ),
-//           )
-//         ],
-//       ),
-//     ),
-//     Container(
-//       height: MediaQuery.of(context).size.height * 0.28,
-//       child: ListView.builder(
-//         padding: EdgeInsets.only(left: 16),
-//         scrollDirection: Axis.horizontal,
-//         itemCount: popularMovies.length,
-//         itemBuilder: (context, index) {
-//           return Column(
-//             children: [
-//               Container(
-//                 height: 160.0,
-//                 width: MediaQuery.of(context).size.width * 0.6,
-//                 margin: EdgeInsets.all(5.0),
-//                 child: ClipRRect(
-//                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
-//                   child: Image.network(popularMovies[index].avatar, fit: BoxFit.cover),
-//                 ),
-//               ),
-//               SizedBox(height: 5.0),
-//               Text(
-//                 'Captain Philips 2019',
-//                 style: TextStyle(
-//                   color: ColorBase.amethystSmoke,
-//                   fontSize: 16.0
-//                 ),
-//               ),
-//               SizedBox(height: 5.0),
-//               Text(
-//                 'Drama . Action . Crime',
-//                 style: TextStyle(
-//                   color: ColorBase.mandy,
-//                   fontSize: 12.0
-//                 ),
-//               )
-//             ],
-//           );
-//         },
-//       ),
-//     );
-// }
+  _buildCarouselSlider(List<PopularMovie> list) {
+    return CarouselSlider(
+      items: list.sublist(0, 5).map((item) => Container(
+        child: Container(
+          margin: EdgeInsets.all(5.0),
+          child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              child: Stack(
+                children: <Widget>[
+                  Image.network('${Config.baseImageUrl}${item.backdropPath}', fit: BoxFit.cover),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          end: Alignment(0.0, -1),
+                          begin: Alignment(0.0, 0.4),
+                          colors: <Color>[
+                            Color(0x8A000000),
+                            Colors.black12.withOpacity(0.0)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 24.0,
+                    left: 10.0,
+                    child: Text(
+                      item.originalTitle,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  )
+                ],
+              )
+          ),
+        ),
+      )).toList(),
+      options: CarouselOptions(
+        autoPlay: true,
+        viewportFraction: 0.98,
+        enlargeCenterPage: false,
+        onPageChanged: (index, reason) {
+          setState(() {
+            _current = index;
+          });
+        }
+      ),
+    );
+  }
+
+  _buildCarouselIndicator(List<PopularMovie> list) {
+    return Positioned(
+      bottom: 5.0,
+      left: 0.0,
+      right: 0.0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: list.sublist(0,5).map((item) {
+          int index = list.indexOf(item);
+          return Container(
+            width: 5.0,
+            height: 5.0,
+            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 3.0),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: _current == index
+                  ? ColorBase.mandy
+                  : Color.fromRGBO(255, 255, 255, 0.4),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
