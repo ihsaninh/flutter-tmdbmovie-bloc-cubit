@@ -30,8 +30,8 @@ class _HomeState extends State<Home> {
         elevation: 0.0,
         actions: [
           IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {}
+            icon: Icon(Icons.search),
+            onPressed: () {}
           ),
         ],
         leading: IconButton(
@@ -73,40 +73,40 @@ class _HomeState extends State<Home> {
         child: Container(
           margin: EdgeInsets.all(5.0),
           child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              child: Stack(
-                children: <Widget>[
-                  Image.network('${Config.baseImageUrl}${item.backdropPath}', fit: BoxFit.cover),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 100,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          end: Alignment(0.0, -1),
-                          begin: Alignment(0.0, 0.4),
-                          colors: <Color>[
-                            Color(0x8A000000),
-                            Colors.black12.withOpacity(0.0)
-                          ],
-                        ),
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            child: Stack(
+              children: <Widget>[
+                Image.network('${Config.baseImageUrl}${item.backdropPath}', fit: BoxFit.cover),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    height: 100,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        end: Alignment(0.0, -1),
+                        begin: Alignment(0.0, 0.4),
+                        colors: <Color>[
+                          Color(0x8A000000),
+                          Colors.black12.withOpacity(0.0)
+                        ],
                       ),
                     ),
                   ),
-                  Positioned(
-                    bottom: 24.0,
-                    left: 10.0,
-                    child: Text(
-                      item.originalTitle,
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold
-                      ),
+                ),
+                Positioned(
+                  bottom: 24.0,
+                  left: 10.0,
+                  child: Text(
+                    item.originalTitle,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold
                     ),
-                  )
-                ],
-              )
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       )).toList(),
@@ -139,8 +139,8 @@ class _HomeState extends State<Home> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: _current == index
-                  ? ColorBase.mandy
-                  : Color.fromRGBO(255, 255, 255, 0.4),
+                ? ColorBase.mandy
+                : Color.fromRGBO(255, 255, 255, 0.4),
             ),
           );
         }).toList(),
