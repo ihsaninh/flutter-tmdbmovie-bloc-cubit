@@ -1,31 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/blocs/popularmovie/cubit/PopularMovieCubit.dart';
-import 'package:movie_app/configs/Config.dart';
 
+import 'package:movie_app/configs/Config.dart';
 import 'package:movie_app/constants/Colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:movie_app/models/Genre.dart';
 import 'package:movie_app/models/PopularMovie.dart';
+import 'package:movie_app/blocs/popularmovie/cubit/PopularMovieCubit.dart';
 
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   int _current = 0;
+  TabController _tabController;
 
   @override
   void initState() {
     context.bloc<PopularMovieCubit>().getPopularMovies();
+    _tabController = TabController(length: genres.length , vsync: this, initialIndex: 1);
+    _tabController.addListener(_handleTabIndex);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.removeListener(_handleTabIndex);
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  void _handleTabIndex() {
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Movies db'),
+        title: Text('Movies DB'),
         centerTitle: true,
         elevation: 0.0,
         actions: [
@@ -56,10 +71,12 @@ class _HomeState extends State<Home> {
                       _buildCarouselIndicator(state.popularMovies),
                     ],
                   ),
+                  _buildTabbar(),
+                  _buildTabBarView(),
                 ],
               );
             } else {
-              return Text('Gagal bro', style: TextStyle(color: Colors.white));
+              return Text('Failed get data', style: TextStyle(color: Colors.white));
             }
           }
         ),
@@ -142,6 +159,35 @@ class _HomeState extends State<Home> {
                 ? ColorBase.mandy
                 : Color.fromRGBO(255, 255, 255, 0.4),
             ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  _buildTabbar() {
+    return TabBar(
+      controller: _tabController,
+      labelColor: Colors.white,
+      indicatorColor: ColorBase.mandy,
+      isScrollable: true,
+      tabs: genres.map((item) {
+        return Tab(
+          text: item.name,
+        );
+      }).toList(),
+    );
+  }
+
+  _buildTabBarView() {
+    return Container(
+      height: 200,
+      margin: EdgeInsets.only(left: 16.0, right: 16.0),
+      child: TabBarView(
+        controller: _tabController,
+        children: genres.map((item) {
+          return Center(
+            child: Text(item.id.toString(), style: TextStyle(color: Colors.white)),
           );
         }).toList(),
       ),
