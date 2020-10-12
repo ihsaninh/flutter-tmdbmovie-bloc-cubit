@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
 
 import 'package:movie_app/configs/Config.dart';
 import 'package:movie_app/constants/Colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:movie_app/models/Genre.dart';
-import 'package:movie_app/models/PopularMovie.dart';
-import 'package:movie_app/blocs/popularmovie/cubit/PopularMovieCubit.dart';
+import 'package:movie_app/models/MovieList.dart';
+import 'package:movie_app/blocs/popularmovie/PopularMovieCubit.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -20,7 +21,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   @override
   void initState() {
     context.bloc<PopularMovieCubit>().getPopularMovies();
-    _tabController = TabController(length: genres.length , vsync: this, initialIndex: 1);
+    context.bloc<GenreMovieListCubit>().getGenreMovieList(genres[0].id.toString());
+    _tabController = TabController(length: genres.length , vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
     super.initState();
   }
@@ -55,36 +57,50 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
         ),
       ),
       body: Container(
-        child: BlocBuilder<PopularMovieCubit, PopularMovieState>(
-          builder: (context, state) {
-            if (state is PopularMovieLoadInProgress) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is PopularMovieLoadSuccess) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            BlocBuilder<PopularMovieCubit, PopularMovieState>(
+              builder: (context, state) {
+                if (state is PopularMovieLoadInProgress) {
+                  return CircularProgressIndicator();
+                } else if (state is PopularMovieLoadSuccess) {
+                  return Stack(
                     children: [
                       _buildCarouselSlider(state.popularMovies),
                       _buildCarouselIndicator(state.popularMovies),
                     ],
-                  ),
-                  _buildTabbar(),
-                  _buildTabBarView(),
-                ],
-              );
-            } else {
-              return Text('Failed get data', style: TextStyle(color: Colors.white));
-            }
-          }
+                  );
+                } else {
+                  return Text('Failed Get Data Banner', style: TextStyle(color: Colors.white));
+                }
+              },
+            ),
+            BlocBuilder<GenreMovieListCubit, GenreMovieListState>(
+              builder: (context, state) {
+                if (state is GenreMovieListLoadInProgress) {
+                  return CircularProgressIndicator();
+                } else if (state is GenreMovieListLoadSuccess) {
+                  return Container(
+                    child: Column(
+                      children: [
+                        _buildTabbar(),
+                        _buildTabBarView(state.genreMovieLists),
+                      ],
+                    ),
+                  );
+                } else {
+                  return Text('Failed Get Data Tab', style: TextStyle(color: Colors.white));
+                }
+              }
+            )
+          ],
         ),
       ),
     );
   }
 
-  _buildCarouselSlider(List<PopularMovie> list) {
+  _buildCarouselSlider(List<MovieList> list) {
     return CarouselSlider(
       items: list.sublist(0, 5).map((item) => Container(
         child: Container(
@@ -140,7 +156,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
     );
   }
 
-  _buildCarouselIndicator(List<PopularMovie> list) {
+  _buildCarouselIndicator(List<MovieList> list) {
     return Positioned(
       bottom: 5.0,
       left: 0.0,
@@ -168,6 +184,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   _buildTabbar() {
     return TabBar(
       controller: _tabController,
+      onTap: (index) => print(index),
       labelColor: Colors.white,
       indicatorColor: ColorBase.mandy,
       isScrollable: true,
@@ -179,15 +196,36 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
     );
   }
 
-  _buildTabBarView() {
+  _buildTabBarView(List <MovieList> genreListMovies) {
     return Container(
       height: 200,
-      margin: EdgeInsets.only(left: 16.0, right: 16.0),
       child: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _tabController,
         children: genres.map((item) {
-          return Center(
-            child: Text(item.id.toString(), style: TextStyle(color: Colors.white)),
+          return ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            scrollDirection: Axis.horizontal,
+            itemCount: genreListMovies.length,
+            itemBuilder: (context, index) {
+              var data = genreListMovies[index];
+              return Container(
+                padding: EdgeInsets.only(top: 8.0, right: 16.0),
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                      child: Image.network(
+                        '${Config.baseImageUrl}${data.posterPath}',
+                        fit: BoxFit.cover,
+                        width: 120.0,
+                        height: 180.0,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
           );
         }).toList(),
       ),

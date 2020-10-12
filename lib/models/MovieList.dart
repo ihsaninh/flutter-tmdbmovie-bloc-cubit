@@ -1,4 +1,4 @@
-class PopularMovie {
+class MovieList {
   double popularity;
   double voteCount;
   bool video;
@@ -14,7 +14,7 @@ class PopularMovie {
   String overview;
   String releaseDate;
 
-  PopularMovie(
+  MovieList(
       {this.popularity,
       this.voteCount,
       this.video,
@@ -30,7 +30,7 @@ class PopularMovie {
       this.overview,
       this.releaseDate});
 
-  PopularMovie.fromJson(Map<String, dynamic> json) {
+  MovieList.fromJson(Map<String, dynamic> json) {
     popularity = json['popularity'] == null ? 0.0 : json['popularity'].toDouble();
     voteCount = json['vote_count'] == null ? 0.0 : json['vote_count'].toDouble();
     video = json['video'];

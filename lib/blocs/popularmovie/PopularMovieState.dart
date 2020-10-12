@@ -2,9 +2,6 @@ part of 'PopularMovieCubit.dart';
 
 abstract class PopularMovieState extends Equatable {
   const PopularMovieState();
-
-  @override
-  List<Object> get props => [];
 }
 
 class PopularMovieInitial extends PopularMovieState {
@@ -20,7 +17,7 @@ class PopularMovieLoadInProgress extends PopularMovieState {
 class PopularMovieLoadSuccess extends PopularMovieState {
   PopularMovieLoadSuccess(this.popularMovies);
 
-  final List<PopularMovie> popularMovies;
+  final List<MovieList> popularMovies;
 
   @override
   List<Object> get props => [popularMovies];

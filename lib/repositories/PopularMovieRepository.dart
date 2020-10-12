@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
 
-import 'package:movie_app/models/PopularMovie.dart';
+import 'package:movie_app/models/MovieList.dart';
 
 class PopularMovieRepository {
   Dio dio = Dio();
 
-  Future<List<PopularMovie>> getPopularMovies() async {
+  Future<List<MovieList>> getPopularMovies() async {
     try {
       Response response = await dio.get('https://api.themoviedb.org/3/movie/popular?api_key=52c752b31bfe181e2fa03ee3fb20eecd&page=1');
       return response.data['results']
-          .map<PopularMovie>((json) => PopularMovie.fromJson(json))
+          .map<MovieList>((json) => MovieList.fromJson(json))
           .toList();
     } catch (e) {
       throw e;

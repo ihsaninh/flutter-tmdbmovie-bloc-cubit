@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movie_app/models/PopularMovie.dart';
+import 'package:movie_app/models/MovieList.dart';
 
 import 'package:movie_app/repositories/PopularMovieRepository.dart';
 

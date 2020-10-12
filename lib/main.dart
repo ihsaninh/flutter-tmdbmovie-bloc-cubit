@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/blocs/popularmovie/cubit/PopularMovieCubit.dart';
-import 'package:movie_app/repositories/PopularMovieRepository.dart';
 
+import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
+import 'package:movie_app/blocs/popularmovie/PopularMovieCubit.dart';
+import 'package:movie_app/repositories/GenreMovieListRepository.dart';
+import 'package:movie_app/repositories/PopularMovieRepository.dart';
 import 'package:movie_app/screens/Home.dart';
 import 'package:movie_app/constants/Colors.dart';
 
@@ -44,6 +46,11 @@ class MyApp extends StatelessWidget {
             repository: PopularMovieRepository()
           ),
         ),
+        BlocProvider<GenreMovieListCubit>(
+          create: (contect) => GenreMovieListCubit(
+            repository: GenreMovieListRepository()
+          ),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
