@@ -13,7 +13,7 @@ class TopRatedMovieCubit extends Cubit<TopRatedMovieState> {
 
   TopRatedMovieCubit({ this.repository }) : super(TopRatedMovieInitial());
 
-  Future<void> getPopularMovies() async {
+  Future<void> getTopRatedMovie() async {
     try{
       emit(TopRatedMovieLoadInProgress());
       final topRatedMovies = await repository.getTopRatedMovies();

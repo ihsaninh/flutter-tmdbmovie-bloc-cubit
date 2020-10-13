@@ -1,6 +1,11 @@
+import 'package:flutter_config/flutter_config.dart';
+
 class Config {
-  static String apiKey = '52c752b31bfe181e2fa03ee3fb20eecd';
-  static String baseUrl = 'https://api.themoviedb.org/3/movie';
-  static String popularUrl = '$baseUrl/popular?api_key=$apiKey&page=1';
-  static String baseImageUrl = 'https://image.tmdb.org/t/p/w500';
+  static String apiKey = FlutterConfig.get('API_KEY');
+  static String baseUrl = FlutterConfig.get('BASE_URL');
+  static String baseImageUrl = FlutterConfig.get('IMAGE_URL');
+
+  static String popularUrl = '$baseUrl/movie/popular?api_key=$apiKey&page=1';
+  static String genreMovieListUrl = '$baseUrl/discover/movie?api_key=$apiKey&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1';
+  static String topRatedUrl = '$baseUrl/movie/top_rated?api_key=$apiKey&language=en-EN&page=1';
 }

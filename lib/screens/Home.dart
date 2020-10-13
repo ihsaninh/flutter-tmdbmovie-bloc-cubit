@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:movie_app/blocs/topratedmovie/TopRatedMovieCubit.dart';
+import 'package:movie_app/constants/Colors.dart';
 
 import 'package:movie_app/models/Genre.dart';
 import 'package:movie_app/models/MovieList.dart';
@@ -9,6 +11,7 @@ import 'package:movie_app/widgets/DotIndicator.dart';
 import 'package:movie_app/widgets/MovieCard.dart';
 import 'package:movie_app/blocs/popularmovie/PopularMovieCubit.dart';
 import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
+import 'package:movie_app/widgets/SectionHeader.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -22,6 +25,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     context.bloc<PopularMovieCubit>().getPopularMovies();
+    context.bloc<TopRatedMovieCubit>().getTopRatedMovie();
     context.bloc<GenreMovieListCubit>().getGenreMovieList(genres[0].id.toString());
     _tabController = TabController(length: genres.length , vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
@@ -61,7 +65,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           onPressed: () {},
         ),
       ),
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -96,7 +100,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               builder: (context, state) {
                 if (state is GenreMovieListLoadInProgress) {
                   return Container(
-                    height: 200,
+                    height: 250,
                     child: Center(
                       child: Transform.scale(
                         scale: 0.7,
@@ -110,6 +114,27 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   return Container(
                     child: _buildTabBarView(state.genreMovieLists),
                   );
+                } else {
+                  return Text('Failed Get Data Tab', style: TextStyle(color: Colors.white));
+                }
+              }
+            ),
+            BlocBuilder<TopRatedMovieCubit, TopRatedMovieState>(
+              builder: (context, state) {
+                if (state is TopRatedMovieLoadInProgress) {
+                  return Container(
+                    height: 250,
+                    child: Center(
+                      child: Transform.scale(
+                        scale: 0.7,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      ),
+                    ),
+                  );
+                } else if (state is TopRatedMovieLoadSuccess) {
+                  return _buildTopRatedMovie(state.topRatedMovies);
                 } else {
                   return Text('Failed Get Data Tab', style: TextStyle(color: Colors.white));
                 }
@@ -168,7 +193,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   _buildTabBarView(List <MovieList> genreListMovies) {
     return Container(
-      height: 300,
+      height: 250,
       child: TabBarView(
         physics: NeverScrollableScrollPhysics(),
         controller: _tabController,
@@ -188,6 +213,33 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           );
         }).toList(),
       ),
+    );
+  }
+
+  _buildTopRatedMovie(List<MovieList> topRatedMovies) {
+    return Column(
+      children: [
+        SectionHeader(
+          title: 'Top Rated Movies',
+          subtitle: 'See All',
+        ),
+        Container(
+          height: 250,
+          child: ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            scrollDirection: Axis.horizontal,
+            itemCount: topRatedMovies.length,
+            itemBuilder: (context, index) {
+              var data = topRatedMovies[index];
+              return MovieCard(
+                title: data.title,
+                poster: data.posterPath,
+                rating: data.voteAverage,
+              );
+            }
+          ),
+        ),
+      ],
     );
   }
 }

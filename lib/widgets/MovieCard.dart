@@ -39,11 +39,13 @@ class MovieCard extends StatelessWidget {
               padding: EdgeInsets.only(top: 8.0),
               child: Text(
                 title,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 13.0,
                     color: Colors.white,
-                    height: 1.3
+                    height: 1.3,
                 ),
               ),
             ),

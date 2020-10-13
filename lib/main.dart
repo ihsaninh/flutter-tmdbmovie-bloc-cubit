@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 import 'package:movie_app/screens/Home.dart';
 import 'package:movie_app/constants/Colors.dart';
@@ -24,8 +25,10 @@ class MyBlocObserver extends BlocObserver {
   }
 }
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
+  await FlutterConfig.loadEnvVariables();
   runApp(MyApp());
 }
 
