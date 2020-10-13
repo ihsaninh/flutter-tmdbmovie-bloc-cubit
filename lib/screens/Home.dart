@@ -76,23 +76,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                 }
               },
             ),
+            _buildTabbar(),
             BlocBuilder<GenreMovieListCubit, GenreMovieListState>(
-              builder: (context, state) {
-                if (state is GenreMovieListLoadInProgress) {
-                  return CircularProgressIndicator();
-                } else if (state is GenreMovieListLoadSuccess) {
-                  return Container(
-                    child: Column(
-                      children: [
-                        _buildTabbar(),
-                        _buildTabBarView(state.genreMovieLists),
-                      ],
-                    ),
-                  );
-                } else {
-                  return Text('Failed Get Data Tab', style: TextStyle(color: Colors.white));
+                builder: (context, state) {
+                  if (state is GenreMovieListLoadInProgress) {
+                    return Container(
+                      height: 200,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  } else if (state is GenreMovieListLoadSuccess) {
+                    return Container(
+                      child: _buildTabBarView(state.genreMovieLists),
+                    );
+                  } else {
+                    return Text('Failed Get Data Tab', style: TextStyle(color: Colors.white));
+                  }
                 }
-              }
             )
           ],
         ),
@@ -184,7 +185,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   _buildTabbar() {
     return TabBar(
       controller: _tabController,
-      onTap: (index) => print(index),
+      onTap: (index) => context.bloc<GenreMovieListCubit>().getGenreMovieList(genres[index].id.toString()),
       labelColor: Colors.white,
       indicatorColor: ColorBase.mandy,
       isScrollable: true,
