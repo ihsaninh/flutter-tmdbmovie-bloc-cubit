@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
-import 'package:movie_app/blocs/popularmovie/PopularMovieCubit.dart';
-import 'package:movie_app/repositories/GenreMovieListRepository.dart';
-import 'package:movie_app/repositories/PopularMovieRepository.dart';
 import 'package:movie_app/screens/Home.dart';
 import 'package:movie_app/constants/Colors.dart';
+import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
+import 'package:movie_app/blocs/popularmovie/PopularMovieCubit.dart';
+import 'package:movie_app/blocs/topratedmovie/TopRatedMovieCubit.dart';
+import 'package:movie_app/repositories/GenreMovieListRepository.dart';
+import 'package:movie_app/repositories/PopularMovieRepository.dart';
+import 'package:movie_app/repositories/TopRatedMovieRepository.dart';
 
 class MyBlocObserver extends BlocObserver {
   @override
@@ -31,13 +33,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent
-        ),
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent
+      ),
     );
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
     ]);
     return MultiBlocProvider(
       providers: [
@@ -47,8 +48,13 @@ class MyApp extends StatelessWidget {
           ),
         ),
         BlocProvider<GenreMovieListCubit>(
-          create: (contect) => GenreMovieListCubit(
+          create: (context) => GenreMovieListCubit(
             repository: GenreMovieListRepository()
+          ),
+        ),
+        BlocProvider<TopRatedMovieCubit>(
+          create: (context) => TopRatedMovieCubit(
+              repository: TopRatedMovieRepository()
           ),
         )
       ],

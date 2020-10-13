@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
-
-import 'package:movie_app/configs/Config.dart';
-import 'package:movie_app/constants/Colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+
 import 'package:movie_app/models/Genre.dart';
 import 'package:movie_app/models/MovieList.dart';
+import 'package:movie_app/widgets/CarouselItem.dart';
+import 'package:movie_app/widgets/DotIndicator.dart';
+import 'package:movie_app/widgets/MovieCard.dart';
 import 'package:movie_app/blocs/popularmovie/PopularMovieCubit.dart';
+import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -39,6 +39,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     setState(() {});
   }
 
+  void _getGenreListById(int id) {
+    context.bloc<GenreMovieListCubit>().getGenreMovieList(genres[id].id.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +57,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
         ],
         leading: IconButton(
-          icon: Icon(Icons.whatshot),
+          icon: Icon(Icons.motion_photos_on_rounded),
           onPressed: () {},
         ),
       ),
@@ -64,7 +68,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             BlocBuilder<PopularMovieCubit, PopularMovieState>(
               builder: (context, state) {
                 if (state is PopularMovieLoadInProgress) {
-                  return CircularProgressIndicator();
+                  return Container(
+                    height: 220,
+                    child: Center(
+                      child: Transform.scale(
+                        scale: 0.7,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      ),
+                    ),
+                  );
                 } else if (state is PopularMovieLoadSuccess) {
                   return Stack(
                     children: [
@@ -79,27 +93,27 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ),
             _buildTabbar(),
             BlocBuilder<GenreMovieListCubit, GenreMovieListState>(
-                builder: (context, state) {
-                  if (state is GenreMovieListLoadInProgress) {
-                    return Container(
-                      height: 200,
-                      child: Center(
-                        child: Transform.scale(
-                          scale: 0.7,
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                          ),
+              builder: (context, state) {
+                if (state is GenreMovieListLoadInProgress) {
+                  return Container(
+                    height: 200,
+                    child: Center(
+                      child: Transform.scale(
+                        scale: 0.7,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                         ),
                       ),
-                    );
-                  } else if (state is GenreMovieListLoadSuccess) {
-                    return Container(
-                      child: _buildTabBarView(state.genreMovieLists),
-                    );
-                  } else {
-                    return Text('Failed Get Data Tab', style: TextStyle(color: Colors.white));
-                  }
+                    ),
+                  );
+                } else if (state is GenreMovieListLoadSuccess) {
+                  return Container(
+                    child: _buildTabBarView(state.genreMovieLists),
+                  );
+                } else {
+                  return Text('Failed Get Data Tab', style: TextStyle(color: Colors.white));
                 }
+              }
             )
           ],
         ),
@@ -109,50 +123,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   _buildCarouselSlider(List<MovieList> list) {
     return CarouselSlider(
-      items: list.sublist(0, 5).map((item) => Container(
-        child: Container(
-          margin: EdgeInsets.all(5.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            child: Stack(
-              children: <Widget>[
-                Image.network('${Config.baseImageUrl}${item.backdropPath}', fit: BoxFit.cover),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        end: Alignment(0.0, -1),
-                        begin: Alignment(0.0, 0.4),
-                        colors: <Color>[
-                          Color(0x8A000000),
-                          Colors.black12.withOpacity(0.0)
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 24.0,
-                  left: 10.0,
-                  child: Text(
-                    item.originalTitle,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      )).toList(),
+      items: list.sublist(0, 5).map((item) {
+        return CarouselItem(
+          avatar: item.backdropPath,
+          title: item.title,
+        );
+      }).toList(),
       options: CarouselOptions(
         autoPlay: true,
-        viewportFraction: 0.98,
+        viewportFraction: 1,
         enlargeCenterPage: false,
         onPageChanged: (index, reason) {
           setState(() {
@@ -164,40 +143,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   _buildCarouselIndicator(List<MovieList> list) {
-    return Positioned(
-      bottom: 5.0,
-      left: 0.0,
-      right: 0.0,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: list.sublist(0,5).map((item) {
-          int index = list.indexOf(item);
-          return Container(
-            width: 5.0,
-            height: 5.0,
-            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 3.0),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: _current == index
-                ? ColorBase.mandy
-                : Color.fromRGBO(255, 255, 255, 0.4),
-            ),
-          );
-        }).toList(),
-      ),
+    return DotIndicator(
+      lists: list,
+      currentIndex: _current,
     );
   }
 
   _buildTabbar() {
     return TabBar(
+      labelStyle: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600),
       controller: _tabController,
-      onTap: (index) => context.bloc<GenreMovieListCubit>().getGenreMovieList(genres[index].id.toString()),
+      onTap: (index) => _getGenreListById(index),
       labelColor: Colors.white,
-      indicatorColor: ColorBase.mandy,
+      indicatorWeight: 3,
+      indicatorColor: Colors.white,
       isScrollable: true,
       tabs: genres.map((item) {
         return Tab(
-          text: item.name,
+          text: item.name.toUpperCase(),
         );
       }).toList(),
     );
@@ -216,67 +179,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             itemCount: genreListMovies.length,
             itemBuilder: (context, index) {
               var data = genreListMovies[index];
-              return Container(
-                padding: EdgeInsets.only(top: 8.0, right: 12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(2.0)),
-                      child: Image.network(
-                        '${Config.baseImageUrl}${data.posterPath}',
-                        fit: BoxFit.cover,
-                        width: 120.0,
-                        height: 180.0,
-                      ),
-                    ),
-                    ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 120),
-                      child: Container(
-                        padding: EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          data.title,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13.0,
-                            color: Colors.white,
-                            height: 1.3
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${data.voteAverage}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13.0,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 4.0),
-                            child: RatingBar(
-                              onRatingUpdate: null,
-                              itemCount: 5,
-                              ignoreGestures: true,
-                              itemSize: 12.0,
-                              initialRating: data.voteAverage / 2,
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+              return MovieCard(
+                title: data.title,
+                poster: data.posterPath,
+                rating: data.voteAverage,
               );
             }
           );
