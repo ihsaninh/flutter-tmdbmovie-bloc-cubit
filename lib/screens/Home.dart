@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:movie_app/blocs/topratedmovie/TopRatedMovieCubit.dart';
-import 'package:movie_app/constants/Colors.dart';
 
+import 'package:movie_app/constants/Navigation.dart';
 import 'package:movie_app/models/Genre.dart';
 import 'package:movie_app/models/MovieList.dart';
 import 'package:movie_app/widgets/CarouselItem.dart';
 import 'package:movie_app/widgets/DotIndicator.dart';
 import 'package:movie_app/widgets/MovieCard.dart';
-import 'package:movie_app/blocs/popularmovie/PopularMovieCubit.dart';
-import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
 import 'package:movie_app/widgets/SectionHeader.dart';
+import 'package:movie_app/blocs/popularmovie/PopularMovieCubit.dart';
+import 'package:movie_app/blocs/topratedmovie/TopRatedMovieCubit.dart';
+import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -57,13 +57,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         actions: [
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: () {}
+            onPressed: () => Navigator.pushNamed(context, Navigation.SearchPage)
           ),
         ],
-        leading: IconButton(
-          icon: Icon(Icons.motion_photos_on_rounded),
-          onPressed: () {},
-        ),
+        leading: Icon(Icons.motion_photos_on_rounded),
       ),
       body: SingleChildScrollView(
         child: Column(

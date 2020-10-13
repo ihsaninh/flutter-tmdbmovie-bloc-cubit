@@ -3,13 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_config/flutter_config.dart';
 
+import 'package:movie_app/configs/Routes.dart';
 import 'package:movie_app/screens/Home.dart';
 import 'package:movie_app/constants/Colors.dart';
-import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
+import 'package:movie_app/constants/Navigation.dart';
+import 'package:movie_app/blocs/SearchMovieCubit.dart';
 import 'package:movie_app/blocs/popularmovie/PopularMovieCubit.dart';
 import 'package:movie_app/blocs/topratedmovie/TopRatedMovieCubit.dart';
+import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
 import 'package:movie_app/repositories/GenreMovieListRepository.dart';
 import 'package:movie_app/repositories/PopularMovieRepository.dart';
+import 'package:movie_app/repositories/SearchMovieRepository.dart';
 import 'package:movie_app/repositories/TopRatedMovieRepository.dart';
 
 class MyBlocObserver extends BlocObserver {
@@ -59,6 +63,11 @@ class MyApp extends StatelessWidget {
           create: (context) => TopRatedMovieCubit(
               repository: TopRatedMovieRepository()
           ),
+        ),
+        BlocProvider<SearchMovieCubit>(
+          create: (context) => SearchMovieCubit(
+            repository: SearchMovieRepository()
+          ),
         )
       ],
       child: MaterialApp(
@@ -68,6 +77,8 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: ColorBase.primary,
         ),
         home: Home(),
+        onGenerateRoute: generateRoutes,
+        navigatorKey: Navigation.navKey,
       ),
     );
   }
