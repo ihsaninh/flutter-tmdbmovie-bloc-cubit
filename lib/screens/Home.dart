@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
 
 import 'package:movie_app/configs/Config.dart';
@@ -14,7 +15,7 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   int _current = 0;
   TabController _tabController;
 
@@ -83,7 +84,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                     return Container(
                       height: 200,
                       child: Center(
-                        child: CircularProgressIndicator(),
+                        child: Transform.scale(
+                          scale: 0.7,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          ),
+                        ),
                       ),
                     );
                   } else if (state is GenreMovieListLoadSuccess) {
@@ -199,7 +205,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
 
   _buildTabBarView(List <MovieList> genreListMovies) {
     return Container(
-      height: 200,
+      height: 300,
       child: TabBarView(
         physics: NeverScrollableScrollPhysics(),
         controller: _tabController,
@@ -211,8 +217,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
             itemBuilder: (context, index) {
               var data = genreListMovies[index];
               return Container(
-                padding: EdgeInsets.only(top: 8.0, right: 16.0),
+                padding: EdgeInsets.only(top: 8.0, right: 12.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(2.0)),
@@ -223,6 +230,51 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                         height: 180.0,
                       ),
                     ),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 120),
+                      child: Container(
+                        padding: EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          data.title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13.0,
+                            color: Colors.white,
+                            height: 1.3
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${data.voteAverage}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 4.0),
+                            child: RatingBar(
+                              onRatingUpdate: null,
+                              itemCount: 5,
+                              ignoreGestures: true,
+                              itemSize: 12.0,
+                              initialRating: data.voteAverage / 2,
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
                   ],
                 ),
               );

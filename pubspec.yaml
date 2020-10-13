@@ -33,6 +33,7 @@ dependencies:
   flutter_bloc: ^6.0.6
   dio: ^3.0.10
   equatable: ^1.2.5
+  flutter_rating_bar: ^3.0.1+1
 
 dev_dependencies:
   flutter_test:
