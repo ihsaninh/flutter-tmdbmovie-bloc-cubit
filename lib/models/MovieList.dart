@@ -31,8 +31,10 @@ class MovieList {
       this.releaseDate});
 
   MovieList.fromJson(Map<String, dynamic> json) {
-    popularity = json['popularity'] == null ? 0.0 : json['popularity'].toDouble();
-    voteCount = json['vote_count'] == null ? 0.0 : json['vote_count'].toDouble();
+    popularity =
+        json['popularity'] == null ? 0.0 : json['popularity'].toDouble();
+    voteCount =
+        json['vote_count'] == null ? 0.0 : json['vote_count'].toDouble();
     video = json['video'];
     posterPath = json['poster_path'];
     id = json['id'] == null ? 0.0 : json['id'].toDouble();
@@ -42,9 +44,10 @@ class MovieList {
     originalTitle = json['original_title'];
     genreIds = json['genre_ids'].cast<int>();
     title = json['title'];
-    voteAverage = json['vote_average'] == null ? 0.0 : json['vote_average'].toDouble();
+    voteAverage =
+        json['vote_average'] == null ? 0.0 : json['vote_average'].toDouble();
     overview = json['overview'];
-    releaseDate = json['release_date'];
+    releaseDate = json['release_date'] ?? '';
   }
 
   Map<String, dynamic> toJson() {

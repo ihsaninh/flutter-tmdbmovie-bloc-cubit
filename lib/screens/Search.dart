@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:movie_app/blocs/SearchMovieCubit.dart';
-import 'package:movie_app/configs/Config.dart';
 import 'package:movie_app/utils/Debouncer.dart';
+import 'package:movie_app/widgets/ListTileSearch.dart';
+import 'package:movie_app/widgets/SearchFormField.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -13,7 +14,13 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
 
   TextEditingController _textFieldController = TextEditingController();
-  Debouncer _debouncer = Debouncer(milliseconds: 500);
+  Debouncer _debouncer = Debouncer(milliseconds: 1000);
+
+  @override
+  void initState() {
+    context.bloc<SearchMovieCubit>().reset();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -25,6 +32,11 @@ class _SearchPageState extends State<SearchPage> {
     _debouncer.run(() => context.bloc<SearchMovieCubit>().getSearchMovies(query));
   }
 
+  void _onPressClear() {
+    _textFieldController.clear();
+    context.bloc<SearchMovieCubit>().reset();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +46,7 @@ class _SearchPageState extends State<SearchPage> {
         actions: [
           IconButton(
             icon: Icon(Icons.close),
-            onPressed: () => _textFieldController.clear(),
+            onPressed: _onPressClear,
           ),
         ],
       ),
@@ -49,26 +61,10 @@ class _SearchPageState extends State<SearchPage> {
               itemCount: state.searchMovieResult.length,
               itemBuilder: (context, index) {
                 var data = state.searchMovieResult[index];
-                return ListTile(
-                  onTap: () {},
-                  leading: Container(
-                    height: 200,
-                    child: Image.network(
-                      '${Config.baseImageUrl}${data.posterPath}',
-                    ),
-                  ),
-                  title: Text(
-                    data.title,
-                    style: TextStyle(
-                      color: Colors.white
-                    ),
-                  ),
-                  subtitle: Text(
-                    data.releaseDate,
-                    style: TextStyle(
-                      color: Colors.white70
-                    ),
-                  ),
+                return ListTileSearch(
+                  poster: data.posterPath,
+                  title: data.title,
+                  date: data.releaseDate
                 );
               },
             );
@@ -81,22 +77,10 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   _buildSearchField() {
-    return TextField(
-      autofocus: true,
+    return SearchFormField(
       controller: _textFieldController,
-      onChanged: (text) => _getSearchMovies(text),
-      decoration: InputDecoration(
-        hintText: "Search",
-        border: InputBorder.none,
-        hintStyle: TextStyle(
-          color: Colors.white70,
-          fontWeight: FontWeight.bold
-        ),
-      ),
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 16.0
-      ),
+      onChanged: (query) => _getSearchMovies(query),
+      placeHolder: 'Search'
     );
   }
 }
