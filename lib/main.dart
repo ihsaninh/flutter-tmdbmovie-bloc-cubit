@@ -7,14 +7,10 @@ import 'package:movie_app/configs/Routes.dart';
 import 'package:movie_app/screens/Home.dart';
 import 'package:movie_app/constants/Colors.dart';
 import 'package:movie_app/constants/Navigation.dart';
-import 'package:movie_app/blocs/SearchMovieCubit.dart';
+import 'package:movie_app/blocs/searchmovie/SearchMovieCubit.dart';
 import 'package:movie_app/blocs/popularmovie/PopularMovieCubit.dart';
 import 'package:movie_app/blocs/topratedmovie/TopRatedMovieCubit.dart';
 import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
-import 'package:movie_app/repositories/GenreMovieListRepository.dart';
-import 'package:movie_app/repositories/PopularMovieRepository.dart';
-import 'package:movie_app/repositories/SearchMovieRepository.dart';
-import 'package:movie_app/repositories/TopRatedMovieRepository.dart';
 
 class MyBlocObserver extends BlocObserver {
   @override
@@ -50,24 +46,16 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<PopularMovieCubit>(
-          create:(context) => PopularMovieCubit(
-            repository: PopularMovieRepository()
-          ),
+          create:(context) => PopularMovieCubit()..getPopularMovies(),
         ),
         BlocProvider<GenreMovieListCubit>(
-          create: (context) => GenreMovieListCubit(
-            repository: GenreMovieListRepository()
-          ),
+          create: (context) => GenreMovieListCubit()..getGenreMovieList(),
         ),
         BlocProvider<TopRatedMovieCubit>(
-          create: (context) => TopRatedMovieCubit(
-              repository: TopRatedMovieRepository()
-          ),
+          create: (context) => TopRatedMovieCubit()..getTopRatedMovie(),
         ),
         BlocProvider<SearchMovieCubit>(
-          create: (context) => SearchMovieCubit(
-            repository: SearchMovieRepository()
-          ),
+          create: (context) => SearchMovieCubit(),
         )
       ],
       child: MaterialApp(

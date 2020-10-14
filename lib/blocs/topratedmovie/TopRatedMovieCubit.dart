@@ -9,9 +9,9 @@ part 'TopRatedMovieState.dart';
 
 class TopRatedMovieCubit extends Cubit<TopRatedMovieState> {
 
-  final TopRatedMovieRepository repository;
+  TopRatedMovieRepository repository = TopRatedMovieRepository();
 
-  TopRatedMovieCubit({ this.repository }) : super(TopRatedMovieInitial());
+  TopRatedMovieCubit() : super(TopRatedMovieInitial());
 
   Future<void> getTopRatedMovie() async {
     try{

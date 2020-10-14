@@ -24,9 +24,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    context.bloc<PopularMovieCubit>().getPopularMovies();
-    context.bloc<TopRatedMovieCubit>().getTopRatedMovie();
-    context.bloc<GenreMovieListCubit>().getGenreMovieList(genres[0].id.toString());
     _tabController = TabController(length: genres.length , vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
     super.initState();
@@ -44,7 +41,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   void _getGenreListById(int id) {
-    context.bloc<GenreMovieListCubit>().getGenreMovieList(genres[id].id.toString());
+    context.bloc<GenreMovieListCubit>().getGenreMovieList(genreId: genres[id].id);
   }
 
   @override

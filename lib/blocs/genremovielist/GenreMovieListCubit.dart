@@ -7,11 +7,12 @@ part 'GenreMovieListState.dart';
 
 class GenreMovieListCubit extends Cubit<GenreMovieListState> {
 
-  final GenreMovieListRepository repository;
+  GenreMovieListRepository repository = GenreMovieListRepository();
 
-  GenreMovieListCubit({ this.repository }) : super(GenreMovieListInitial());
+  GenreMovieListCubit() : super(GenreMovieListInitial());
 
-  Future<void> getGenreMovieList(String genreId) async {
+  Future<void> getGenreMovieList({ int genreId = 28 }) async {
+    print(genreId);
     try {
       emit(GenreMovieListLoadInProgress());
       final genreMovisLists = await repository.getGenreMovieList(genreId);

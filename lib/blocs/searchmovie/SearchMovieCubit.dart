@@ -9,9 +9,9 @@ part 'SearchMovieState.dart';
 
 class SearchMovieCubit extends Cubit<SearchMovieState> {
 
-  final SearchMovieRepository repository;
+  SearchMovieRepository repository = SearchMovieRepository();
 
-  SearchMovieCubit({ this.repository }) : super(SearchMovieInitial());
+  SearchMovieCubit() : super(SearchMovieInitial());
 
   Future<void> getSearchMovies(String query) async {
     try{

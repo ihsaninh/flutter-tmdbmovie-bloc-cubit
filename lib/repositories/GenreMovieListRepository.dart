@@ -6,7 +6,7 @@ import 'package:movie_app/models/MovieList.dart';
 class GenreMovieListRepository {
   Dio dio = Dio();
 
-  Future<List<MovieList>> getGenreMovieList(String genreId) async {
+  Future<List<MovieList>> getGenreMovieList(int genreId) async {
     try {
       Response response = await dio.get("${Config.genreMovieListUrl}&with_genres=$genreId");
       return response.data['results']
