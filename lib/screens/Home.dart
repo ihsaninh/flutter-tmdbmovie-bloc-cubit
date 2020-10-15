@@ -11,6 +11,7 @@ import 'package:movie_app/widgets/MovieCard.dart';
 import 'package:movie_app/widgets/SectionHeader.dart';
 import 'package:movie_app/blocs/popularmovie/PopularMovieCubit.dart';
 import 'package:movie_app/blocs/topratedmovie/TopRatedMovieCubit.dart';
+import 'package:movie_app/blocs/upcomingmovie/upcoming_movie_cubit.dart';
 import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
 
 class Home extends StatefulWidget {
@@ -48,13 +49,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Movies DB'),
-        centerTitle: true,
+        title: Text('My Movie'),
         elevation: 0.0,
         actions: [
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () => Navigator.pushNamed(context, Navigation.SearchPage)
+          ),
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {}
           ),
         ],
         leading: Icon(Icons.motion_photos_on_rounded),
@@ -130,9 +134,30 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 } else if (state is TopRatedMovieLoadSuccess) {
                   return _buildTopRatedMovie(state.topRatedMovies);
                 } else {
-                  return Text('Failed Get Data Tab', style: TextStyle(color: Colors.white));
+                  return Text('Failed Get Data Top Rated Movies', style: TextStyle(color: Colors.white));
                 }
               }
+            ),
+            BlocBuilder<UpcomingMovieCubit, UpcomingMovieState>(
+                builder: (context, state) {
+                  if (state is UpcomingMovieLoadInProgress) {
+                    return Container(
+                      height: 250,
+                      child: Center(
+                        child: Transform.scale(
+                          scale: 0.7,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          ),
+                        ),
+                      ),
+                    );
+                  } else if (state is UpcomingMovieLoadSuccess) {
+                    return _buildUpcomingMovie(state.upcomingMovies);
+                  } else {
+                    return Text('Failed Get Data Upcoming Movies', style: TextStyle(color: Colors.white));
+                  }
+                }
             )
           ],
         ),
@@ -225,6 +250,33 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             itemCount: topRatedMovies.length,
             itemBuilder: (context, index) {
               var data = topRatedMovies[index];
+              return MovieCard(
+                title: data.title,
+                poster: data.posterPath,
+                rating: data.voteAverage,
+              );
+            }
+          ),
+        ),
+      ],
+    );
+  }
+
+  _buildUpcomingMovie(List<MovieList> upcomingMovies) {
+    return Column(
+      children: [
+        SectionHeader(
+          title: 'Upcoming Movies',
+          subtitle: 'See All',
+        ),
+        Container(
+          height: 250,
+          child: ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            scrollDirection: Axis.horizontal,
+            itemCount: upcomingMovies.length,
+            itemBuilder: (context, index) {
+              var data = upcomingMovies[index];
               return MovieCard(
                 title: data.title,
                 poster: data.posterPath,

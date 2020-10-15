@@ -9,4 +9,5 @@ class Config {
   static String genreMovieListUrl = '$baseUrl/discover/movie?api_key=$apiKey&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1';
   static String topRatedUrl = '$baseUrl/movie/top_rated?api_key=$apiKey&language=en-EN&page=1';
   static String seacrhMovieUrl = '$baseUrl/search/movie?api_key=$apiKey&language=en-US&page=1&include_adult=false';
+  static String upcomingMovieUrl = '$baseUrl/movie/upcoming?api_key=$apiKey&language=en-US&page=1';
 }

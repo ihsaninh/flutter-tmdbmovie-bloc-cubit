@@ -28,15 +28,15 @@ class CarouselItem extends StatelessWidget {
                     end: Alignment(0.0, -1),
                     begin: Alignment(0.0, 0.4),
                     colors: <Color>[
-                      Color(0x8A000000),
-                      Colors.black12.withOpacity(0.0)
+                      Colors.black,
+                      Colors.black.withOpacity(0.0)
                     ],
                   ),
                 ),
               ),
             ),
             Positioned(
-              bottom: 24.0,
+              bottom: 30.0,
               left: 10.0,
               child: Text(
                 title,
