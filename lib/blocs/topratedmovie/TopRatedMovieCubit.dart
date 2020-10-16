@@ -8,17 +8,16 @@ import 'package:movie_app/repositories/TopRatedMovieRepository.dart';
 part 'TopRatedMovieState.dart';
 
 class TopRatedMovieCubit extends Cubit<TopRatedMovieState> {
-
   TopRatedMovieRepository repository = TopRatedMovieRepository();
 
   TopRatedMovieCubit() : super(TopRatedMovieInitial());
 
   Future<void> getTopRatedMovie() async {
-    try{
+    try {
       emit(TopRatedMovieLoadInProgress());
       final topRatedMovies = await repository.getTopRatedMovies();
       emit(TopRatedMovieLoadSuccess(topRatedMovies));
-    } catch(e) {
+    } catch (e) {
       emit(TopRatedMovieLoadFailure());
     }
   }

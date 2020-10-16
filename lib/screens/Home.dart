@@ -25,7 +25,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    _tabController = TabController(length: genres.length , vsync: this, initialIndex: 0);
+    _tabController =
+        TabController(length: genres.length, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabIndex);
     super.initState();
   }
@@ -42,7 +43,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   void _getGenreListById(int id) {
-    context.bloc<GenreMovieListCubit>().getGenreMovieList(genreId: genres[id].id);
+    context
+        .bloc<GenreMovieListCubit>()
+        .getGenreMovieList(genreId: genres[id].id);
   }
 
   @override
@@ -54,11 +57,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         actions: [
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: () => Navigator.pushNamed(context, Navigation.SearchPage)
+            onPressed: () =>
+                Navigator.pushNamed(context, Navigation.SearchPage),
           ),
           IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {}
+            icon: Icon(
+              Icons.settings,
+            ),
+            onPressed: () {},
           ),
         ],
         leading: Icon(Icons.motion_photos_on_rounded),
@@ -76,7 +82,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: Transform.scale(
                         scale: 0.7,
                         child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
                         ),
                       ),
                     ),
@@ -89,7 +96,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     ],
                   );
                 } else {
-                  return Text('Failed Get Data Banner', style: TextStyle(color: Colors.white));
+                  return Text(
+                    'Failed Get Data Banner',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  );
                 }
               },
             ),
@@ -103,7 +115,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: Transform.scale(
                         scale: 0.7,
                         child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
                         ),
                       ),
                     ),
@@ -113,9 +126,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     child: _buildTabBarView(state.genreMovieLists),
                   );
                 } else {
-                  return Text('Failed Get Data Tab', style: TextStyle(color: Colors.white));
+                  return Text(
+                    'Failed Get Data Tab',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  );
                 }
-              }
+              },
             ),
             BlocBuilder<TopRatedMovieCubit, TopRatedMovieState>(
               builder: (context, state) {
@@ -126,7 +144,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: Transform.scale(
                         scale: 0.7,
                         child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
                         ),
                       ),
                     ),
@@ -134,31 +153,38 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 } else if (state is TopRatedMovieLoadSuccess) {
                   return _buildTopRatedMovie(state.topRatedMovies);
                 } else {
-                  return Text('Failed Get Data Top Rated Movies', style: TextStyle(color: Colors.white));
+                  return Text(
+                    'Failed Get Data Top Rated Movies',
+                    style: TextStyle(color: Colors.white),
+                  );
                 }
-              }
+              },
             ),
             BlocBuilder<UpcomingMovieCubit, UpcomingMovieState>(
-                builder: (context, state) {
-                  if (state is UpcomingMovieLoadInProgress) {
-                    return Container(
-                      height: 250,
-                      child: Center(
-                        child: Transform.scale(
-                          scale: 0.7,
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                          ),
+              builder: (context, state) {
+                if (state is UpcomingMovieLoadInProgress) {
+                  return Container(
+                    height: 250,
+                    child: Center(
+                      child: Transform.scale(
+                        scale: 0.7,
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
                         ),
                       ),
-                    );
-                  } else if (state is UpcomingMovieLoadSuccess) {
-                    return _buildUpcomingMovie(state.upcomingMovies);
-                  } else {
-                    return Text('Failed Get Data Upcoming Movies', style: TextStyle(color: Colors.white));
-                  }
+                    ),
+                  );
+                } else if (state is UpcomingMovieLoadSuccess) {
+                  return _buildUpcomingMovie(state.upcomingMovies);
+                } else {
+                  return Text(
+                    'Failed Get Data Upcoming Movies',
+                    style: TextStyle(color: Colors.white),
+                  );
                 }
-            )
+              },
+            ),
           ],
         ),
       ),
@@ -167,21 +193,25 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   _buildCarouselSlider(List<MovieList> list) {
     return CarouselSlider(
-      items: list.sublist(0, 5).map((item) {
-        return CarouselItem(
-          avatar: item.backdropPath,
-          title: item.title,
-        );
-      }).toList(),
+      items: list.sublist(0, 5).map(
+        (item) {
+          return CarouselItem(
+            avatar: item.backdropPath,
+            title: item.title,
+          );
+        },
+      ).toList(),
       options: CarouselOptions(
         autoPlay: true,
         viewportFraction: 1,
         enlargeCenterPage: false,
         onPageChanged: (index, reason) {
-          setState(() {
-            _current = index;
-          });
-        }
+          setState(
+            () {
+              _current = index;
+            },
+          );
+        },
       ),
     );
   }
@@ -202,35 +232,39 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       indicatorWeight: 3,
       indicatorColor: Colors.white,
       isScrollable: true,
-      tabs: genres.map((item) {
-        return Tab(
-          text: item.name.toUpperCase(),
-        );
-      }).toList(),
+      tabs: genres.map(
+        (item) {
+          return Tab(
+            text: item.name.toUpperCase(),
+          );
+        },
+      ).toList(),
     );
   }
 
-  _buildTabBarView(List <MovieList> genreListMovies) {
+  _buildTabBarView(List<MovieList> genreListMovies) {
     return Container(
       height: 250,
       child: TabBarView(
         physics: NeverScrollableScrollPhysics(),
         controller: _tabController,
-        children: genres.map((item) {
-          return ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            scrollDirection: Axis.horizontal,
-            itemCount: genreListMovies.length,
-            itemBuilder: (context, index) {
-              var data = genreListMovies[index];
-              return MovieCard(
-                title: data.title,
-                poster: data.posterPath,
-                rating: data.voteAverage,
-              );
-            }
-          );
-        }).toList(),
+        children: genres.map(
+          (item) {
+            return ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              scrollDirection: Axis.horizontal,
+              itemCount: genreListMovies.length,
+              itemBuilder: (context, index) {
+                var data = genreListMovies[index];
+                return MovieCard(
+                  title: data.title,
+                  poster: data.posterPath,
+                  rating: data.voteAverage,
+                );
+              },
+            );
+          },
+        ).toList(),
       ),
     );
   }
@@ -255,7 +289,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 poster: data.posterPath,
                 rating: data.voteAverage,
               );
-            }
+            },
           ),
         ),
       ],
@@ -282,7 +316,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 poster: data.posterPath,
                 rating: data.voteAverage,
               );
-            }
+            },
           ),
         ),
       ],

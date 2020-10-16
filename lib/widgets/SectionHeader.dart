@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SectionHeader extends StatelessWidget {
-
   final String title;
   final String subtitle;
   final Function onTap;
@@ -9,13 +8,18 @@ class SectionHeader extends StatelessWidget {
   SectionHeader({
     @required this.title,
     @required this.subtitle,
-    this.onTap
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 16.0, bottom: 12.0),
+      padding: EdgeInsets.only(
+        left: 10.0,
+        right: 10.0,
+        top: 16.0,
+        bottom: 12.0,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

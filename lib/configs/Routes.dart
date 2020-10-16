@@ -5,7 +5,6 @@ import 'package:movie_app/screens/Home.dart';
 import 'package:movie_app/screens/Search.dart';
 
 Route generateRoutes(RouteSettings settings) {
-
   final args = settings.arguments;
 
   switch (settings.name) {
@@ -16,7 +15,6 @@ Route generateRoutes(RouteSettings settings) {
     default:
       return null;
   }
-
 }
 
 MaterialPageRoute buildRoute(RouteSettings settings, Widget builder) {

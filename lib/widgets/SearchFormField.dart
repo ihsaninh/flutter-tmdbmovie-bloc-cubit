@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SearchFormField extends StatelessWidget {
-
   final TextEditingController controller;
   final ValueChanged<String> onChanged;
   final String placeHolder;
@@ -9,8 +8,8 @@ class SearchFormField extends StatelessWidget {
   SearchFormField({
     @required this.controller,
     @required this.onChanged,
-    @required this.placeHolder
-});
+    @required this.placeHolder,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +21,13 @@ class SearchFormField extends StatelessWidget {
         hintText: placeHolder,
         border: InputBorder.none,
         hintStyle: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
         ),
       ),
       style: TextStyle(
-          color: Colors.white,
-          fontSize: 16.0
+        color: Colors.white,
+        fontSize: 16.0,
       ),
     );
   }

@@ -1,7 +1,7 @@
 part of 'upcoming_movie_cubit.dart';
 
 @immutable
-abstract class UpcomingMovieState extends Equatable{
+abstract class UpcomingMovieState extends Equatable {
   const UpcomingMovieState();
 }
 

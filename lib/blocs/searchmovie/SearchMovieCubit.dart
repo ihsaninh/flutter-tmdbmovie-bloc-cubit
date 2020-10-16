@@ -8,17 +8,16 @@ import 'package:movie_app/repositories/SearchMovieRepository.dart';
 part 'SearchMovieState.dart';
 
 class SearchMovieCubit extends Cubit<SearchMovieState> {
-
   SearchMovieRepository repository = SearchMovieRepository();
 
   SearchMovieCubit() : super(SearchMovieInitial());
 
   Future<void> getSearchMovies(String query) async {
-    try{
+    try {
       emit(SearchMovieLoadInProgress());
       final topRatedMovies = await repository.getSearchMovies(query);
       emit(SearchMovieLoadSuccess(topRatedMovies));
-    } catch(e) {
+    } catch (e) {
       emit(SearchMovieLoadFailure());
     }
   }

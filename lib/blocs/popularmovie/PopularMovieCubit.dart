@@ -7,7 +7,6 @@ import 'package:movie_app/repositories/PopularMovieRepository.dart';
 part 'PopularMovieState.dart';
 
 class PopularMovieCubit extends Cubit<PopularMovieState> {
-
   PopularMovieCubit() : super(PopularMovieInitial());
 
   PopularMovieRepository repository = PopularMovieRepository();
@@ -21,5 +20,4 @@ class PopularMovieCubit extends Cubit<PopularMovieState> {
       emit(PopularMovieLoadFailure());
     }
   }
-
 }

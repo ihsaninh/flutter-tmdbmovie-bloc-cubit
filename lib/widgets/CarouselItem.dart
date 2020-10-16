@@ -3,14 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/configs/Config.dart';
 
 class CarouselItem extends StatelessWidget {
-
   final String avatar;
   final String title;
 
-  CarouselItem({
-    @required this.avatar,
-    @required this.title
-  });
+  CarouselItem({@required this.avatar, @required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +37,9 @@ class CarouselItem extends StatelessWidget {
               child: Text(
                 title,
                 style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold
+                  fontSize: 18.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             )

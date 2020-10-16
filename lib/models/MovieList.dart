@@ -14,21 +14,22 @@ class MovieList {
   String overview;
   String releaseDate;
 
-  MovieList(
-      {this.popularity,
-      this.voteCount,
-      this.video,
-      this.posterPath,
-      this.id,
-      this.adult,
-      this.backdropPath,
-      this.originalLanguage,
-      this.originalTitle,
-      this.genreIds,
-      this.title,
-      this.voteAverage,
-      this.overview,
-      this.releaseDate});
+  MovieList({
+    this.popularity,
+    this.voteCount,
+    this.video,
+    this.posterPath,
+    this.id,
+    this.adult,
+    this.backdropPath,
+    this.originalLanguage,
+    this.originalTitle,
+    this.genreIds,
+    this.title,
+    this.voteAverage,
+    this.overview,
+    this.releaseDate,
+  });
 
   MovieList.fromJson(Map<String, dynamic> json) {
     popularity =

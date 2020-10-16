@@ -8,6 +8,7 @@ class GenreMovieListInitial extends GenreMovieListState {
   @override
   List<Object> get props => [];
 }
+
 class GenreMovieListLoadInProgress extends GenreMovieListState {
   @override
   List<Object> get props => [];

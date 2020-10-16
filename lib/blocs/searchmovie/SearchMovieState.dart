@@ -1,7 +1,7 @@
 part of 'SearchMovieCubit.dart';
 
 @immutable
-abstract class SearchMovieState extends Equatable{
+abstract class SearchMovieState extends Equatable {
   const SearchMovieState();
 }
 

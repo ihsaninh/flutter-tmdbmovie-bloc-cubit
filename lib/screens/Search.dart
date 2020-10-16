@@ -12,7 +12,6 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-
   TextEditingController _textFieldController = TextEditingController();
   Debouncer _debouncer = Debouncer(milliseconds: 1000);
 
@@ -64,7 +63,7 @@ class _SearchPageState extends State<SearchPage> {
                 return ListTileSearch(
                   poster: data.posterPath,
                   title: data.title,
-                  date: data.releaseDate
+                  date: data.releaseDate,
                 );
               },
             );
@@ -72,7 +71,7 @@ class _SearchPageState extends State<SearchPage> {
             return Container();
           }
         },
-      )
+      ),
     );
   }
 
@@ -80,7 +79,7 @@ class _SearchPageState extends State<SearchPage> {
     return SearchFormField(
       controller: _textFieldController,
       onChanged: (query) => _getSearchMovies(query),
-      placeHolder: 'Search'
+      placeHolder: 'Search',
     );
   }
 }
