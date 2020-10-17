@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:movie_app/constants/Navigation.dart';
-import 'package:movie_app/screens/Home.dart';
-import 'package:movie_app/screens/Search.dart';
+import 'package:movie_app/constants/navigation.dart';
+import 'package:movie_app/screens/home.dart';
+import 'package:movie_app/screens/search.dart';
 
 Route generateRoutes(RouteSettings settings) {
   final args = settings.arguments;

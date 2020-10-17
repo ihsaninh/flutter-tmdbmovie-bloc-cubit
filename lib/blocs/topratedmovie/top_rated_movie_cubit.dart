@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movie_app/models/MovieList.dart';
+import 'package:movie_app/models/movie_list.dart';
 
-import 'package:movie_app/repositories/TopRatedMovieRepository.dart';
+import 'package:movie_app/repositories/top_rated_movie_repository.dart';
 
-part 'TopRatedMovieState.dart';
+part 'top_rated_movie_state.dart';
 
 class TopRatedMovieCubit extends Cubit<TopRatedMovieState> {
   TopRatedMovieRepository repository = TopRatedMovieRepository();

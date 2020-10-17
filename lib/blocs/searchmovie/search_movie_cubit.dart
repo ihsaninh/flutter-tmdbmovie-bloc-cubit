@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:movie_app/models/MovieList.dart';
+import 'package:movie_app/models/movie_list.dart';
 
-import 'package:movie_app/repositories/SearchMovieRepository.dart';
+import 'package:movie_app/repositories/search_movie_repository.dart';
 
-part 'SearchMovieState.dart';
+part 'search_movie_state.dart';
 
 class SearchMovieCubit extends Cubit<SearchMovieState> {
   SearchMovieRepository repository = SearchMovieRepository();

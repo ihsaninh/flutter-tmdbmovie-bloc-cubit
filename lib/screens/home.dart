@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-import 'package:movie_app/constants/Navigation.dart';
-import 'package:movie_app/models/Genre.dart';
-import 'package:movie_app/models/MovieList.dart';
-import 'package:movie_app/widgets/CarouselItem.dart';
-import 'package:movie_app/widgets/DotIndicator.dart';
-import 'package:movie_app/widgets/MovieCard.dart';
-import 'package:movie_app/widgets/SectionHeader.dart';
-import 'package:movie_app/blocs/popularmovie/PopularMovieCubit.dart';
-import 'package:movie_app/blocs/topratedmovie/TopRatedMovieCubit.dart';
+import 'package:movie_app/constants/navigation.dart';
+import 'package:movie_app/models/genre.dart';
+import 'package:movie_app/models/movie_list.dart';
+import 'package:movie_app/widgets/carousel_item.dart';
+import 'package:movie_app/widgets/dot_indicator.dart';
+import 'package:movie_app/widgets/movie_card.dart';
+import 'package:movie_app/widgets/section_header.dart';
+import 'package:movie_app/blocs/popularmovie/popular_movie_cubit.dart';
+import 'package:movie_app/blocs/topratedmovie/top_rated_movie_cubit.dart';
 import 'package:movie_app/blocs/upcomingmovie/upcoming_movie_cubit.dart';
-import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
+import 'package:movie_app/blocs/genremovielist/genre_movie_list_cubit.dart';
 
 class Home extends StatefulWidget {
   @override

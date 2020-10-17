@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:movie_app/configs/Config.dart';
+import 'package:movie_app/configs/configs.dart';
 
 class ListTileSearch extends StatelessWidget {
   final String poster;

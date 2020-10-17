@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:movie_app/configs/Config.dart';
+import 'package:movie_app/configs/configs.dart';
 
 class CarouselItem extends StatelessWidget {
   final String avatar;
@@ -14,7 +14,10 @@ class CarouselItem extends StatelessWidget {
       child: Container(
         child: Stack(
           children: <Widget>[
-            Image.network('${Config.baseImageUrl}$avatar', fit: BoxFit.cover),
+            Image.network(
+              '${Config.baseImageUrl}$avatar',
+              fit: BoxFit.cover,
+            ),
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(

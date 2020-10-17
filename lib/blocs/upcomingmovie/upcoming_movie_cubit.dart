@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movie_app/models/MovieList.dart';
+import 'package:movie_app/models/movie_list.dart';
 
-import 'package:movie_app/repositories/UpcomingMovieRepository.dart';
+import 'package:movie_app/repositories/upcoming_movie_repository.dart';
 
 part 'upcoming_movie_state.dart';
 

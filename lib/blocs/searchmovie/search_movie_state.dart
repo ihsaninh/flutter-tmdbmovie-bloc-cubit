@@ -1,4 +1,4 @@
-part of 'SearchMovieCubit.dart';
+part of 'search_movie_cubit.dart';
 
 @immutable
 abstract class SearchMovieState extends Equatable {

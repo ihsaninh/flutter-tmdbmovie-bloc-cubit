@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:movie_app/constants/Colors.dart';
-import 'package:movie_app/models/MovieList.dart';
+import 'package:movie_app/constants/colors.dart';
+import 'package:movie_app/models/movie_list.dart';
 
 class DotIndicator extends StatelessWidget {
   final List<MovieList> lists;

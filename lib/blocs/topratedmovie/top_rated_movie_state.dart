@@ -1,4 +1,4 @@
-part of 'TopRatedMovieCubit.dart';
+part of 'top_rated_movie_cubit.dart';
 
 @immutable
 abstract class TopRatedMovieState extends Equatable {

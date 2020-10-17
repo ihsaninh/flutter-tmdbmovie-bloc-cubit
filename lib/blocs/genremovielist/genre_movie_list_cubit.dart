@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movie_app/models/MovieList.dart';
-import 'package:movie_app/repositories/GenreMovieListRepository.dart';
+import 'package:movie_app/models/movie_list.dart';
+import 'package:movie_app/repositories/genre_movie_list_repository.dart';
 
-part 'GenreMovieListState.dart';
+part 'genre_movie_list_state.dart';
 
 class GenreMovieListCubit extends Cubit<GenreMovieListState> {
   GenreMovieListRepository repository = GenreMovieListRepository();
@@ -11,7 +11,6 @@ class GenreMovieListCubit extends Cubit<GenreMovieListState> {
   GenreMovieListCubit() : super(GenreMovieListInitial());
 
   Future<void> getGenreMovieList({int genreId = 28}) async {
-    print(genreId);
     try {
       emit(GenreMovieListLoadInProgress());
       final genreMovisLists = await repository.getGenreMovieList(genreId);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import 'package:movie_app/configs/Config.dart';
+import 'package:movie_app/configs/configs.dart';
 
 class MovieCard extends StatelessWidget {
   final String title;

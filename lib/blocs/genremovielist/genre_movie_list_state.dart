@@ -1,4 +1,4 @@
-part of 'GenreMovieListCubit.dart';
+part of 'genre_movie_list_cubit.dart';
 
 abstract class GenreMovieListState extends Equatable {
   const GenreMovieListState();

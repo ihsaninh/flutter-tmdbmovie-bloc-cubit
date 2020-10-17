@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:movie_app/utils/Debouncer.dart';
-import 'package:movie_app/widgets/ListTileSearch.dart';
-import 'package:movie_app/widgets/SearchFormField.dart';
-import 'package:movie_app/blocs/searchmovie/SearchMovieCubit.dart';
+import 'package:movie_app/utils/debouncer.dart';
+import 'package:movie_app/widgets/list_tile_search.dart';
+import 'package:movie_app/widgets/search_form_field.dart';
+import 'package:movie_app/blocs/searchmovie/search_movie_cubit.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -53,7 +53,13 @@ class _SearchPageState extends State<SearchPage> {
         builder: (context, state) {
           if (state is SearchMovieLoadInProgress) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: Transform.scale(
+                scale: 1,
+                child: CircularProgressIndicator(
+                  valueColor:
+                  AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              ),
             );
           } else if (state is SearchMovieLoadSuccess) {
             return ListView.builder(

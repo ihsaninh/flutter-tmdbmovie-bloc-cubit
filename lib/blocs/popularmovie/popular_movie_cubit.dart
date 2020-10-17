@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movie_app/models/MovieList.dart';
+import 'package:movie_app/models/movie_list.dart';
 
-import 'package:movie_app/repositories/PopularMovieRepository.dart';
+import 'package:movie_app/repositories/popular_movie_repository.dart';
 
-part 'PopularMovieState.dart';
+part 'popular_movie_state.dart';
 
 class PopularMovieCubit extends Cubit<PopularMovieState> {
   PopularMovieCubit() : super(PopularMovieInitial());

@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_config/flutter_config.dart';
 
-import 'package:movie_app/screens/Home.dart';
-import 'package:movie_app/configs/Routes.dart';
-import 'package:movie_app/constants/Colors.dart';
-import 'package:movie_app/constants/Navigation.dart';
-import 'package:movie_app/blocs/searchmovie/SearchMovieCubit.dart';
-import 'package:movie_app/blocs/popularmovie/PopularMovieCubit.dart';
-import 'package:movie_app/blocs/topratedmovie/TopRatedMovieCubit.dart';
-import 'package:movie_app/blocs/genremovielist/GenreMovieListCubit.dart';
+import 'package:movie_app/screens/home.dart';
+import 'package:movie_app/configs/routes.dart';
+import 'package:movie_app/constants/colors.dart';
+import 'package:movie_app/constants/navigation.dart';
+import 'package:movie_app/blocs/searchmovie/search_movie_cubit.dart';
+import 'package:movie_app/blocs/popularmovie/popular_movie_cubit.dart';
+import 'package:movie_app/blocs/topratedmovie/top_rated_movie_cubit.dart';
+import 'package:movie_app/blocs/genremovielist/genre_movie_list_cubit.dart';
 import 'package:movie_app/blocs/upcomingmovie/upcoming_movie_cubit.dart';
 
 class MyBlocObserver extends BlocObserver {
