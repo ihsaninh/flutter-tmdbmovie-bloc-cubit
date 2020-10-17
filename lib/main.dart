@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_config/flutter_config.dart';
 
-import 'package:movie_app/screens/home.dart';
+import 'package:movie_app/screens/movie_home.dart';
 import 'package:movie_app/configs/routes.dart';
 import 'package:movie_app/constants/colors.dart';
 import 'package:movie_app/constants/navigation.dart';
@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
           accentColorBrightness: Brightness.light,
           scaffoldBackgroundColor: ColorBase.primary,
         ),
-        home: Home(),
+        home: MovieHome(),
         onGenerateRoute: generateRoutes,
         navigatorKey: Navigation.navKey,
       ),

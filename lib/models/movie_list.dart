@@ -3,7 +3,7 @@ class MovieList {
   double voteCount;
   bool video;
   String posterPath;
-  double id;
+  int id;
   bool adult;
   String backdropPath;
   String originalLanguage;
@@ -38,7 +38,7 @@ class MovieList {
         json['vote_count'] == null ? 0.0 : json['vote_count'].toDouble();
     video = json['video'];
     posterPath = json['poster_path'];
-    id = json['id'] == null ? 0.0 : json['id'].toDouble();
+    id = json['id'] == null ? 0 : json['id'].toInt();
     adult = json['adult'];
     backdropPath = json['backdrop_path'];
     originalLanguage = json['original_language'];

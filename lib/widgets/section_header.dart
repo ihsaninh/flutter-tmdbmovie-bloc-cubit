@@ -14,11 +14,11 @@ class SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        left: 10.0,
-        right: 10.0,
-        top: 16.0,
-        bottom: 12.0,
+      padding: EdgeInsets.fromLTRB(
+        12.0,
+        16.0,
+        10.0,
+        12.0,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

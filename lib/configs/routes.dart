@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 
 import 'package:movie_app/constants/navigation.dart';
-import 'package:movie_app/screens/home.dart';
+import 'package:movie_app/screens/movie_detail.dart';
+import 'package:movie_app/screens/movie_home.dart';
 import 'package:movie_app/screens/search.dart';
 
 Route generateRoutes(RouteSettings settings) {
   final args = settings.arguments;
 
   switch (settings.name) {
-    case Navigation.Home:
-      return buildRoute(settings, Home());
+    case Navigation.MovieHome:
+      return buildRoute(settings, MovieHome());
     case Navigation.SearchPage:
       return buildRoute(settings, SearchPage());
+    case Navigation.MovieDetail:
+      return buildRoute(settings, MovieDetail(movieId: args));
     default:
       return null;
   }

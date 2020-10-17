@@ -56,8 +56,9 @@ class _SearchPageState extends State<SearchPage> {
               child: Transform.scale(
                 scale: 1,
                 child: CircularProgressIndicator(
-                  valueColor:
-                  AlwaysStoppedAnimation<Color>(Colors.white),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Colors.white,
+                  ),
                 ),
               ),
             );

@@ -14,19 +14,23 @@ import 'package:movie_app/blocs/topratedmovie/top_rated_movie_cubit.dart';
 import 'package:movie_app/blocs/upcomingmovie/upcoming_movie_cubit.dart';
 import 'package:movie_app/blocs/genremovielist/genre_movie_list_cubit.dart';
 
-class Home extends StatefulWidget {
+class MovieHome extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _MovieHomeState createState() => _MovieHomeState();
 }
 
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+class _MovieHomeState extends State<MovieHome>
+    with SingleTickerProviderStateMixin {
   int _current = 0;
   TabController _tabController;
 
   @override
   void initState() {
-    _tabController =
-        TabController(length: genres.length, vsync: this, initialIndex: 0);
+    _tabController = TabController(
+      length: genres.length,
+      vsync: this,
+      initialIndex: 0,
+    );
     _tabController.addListener(_handleTabIndex);
     super.initState();
   }
@@ -48,6 +52,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         .getGenreMovieList(genreId: genres[id].id);
   }
 
+  void _onPressMovie(int movieId) {
+    if (movieId != null) {
+      Navigator.pushNamed(context, Navigation.MovieDetail, arguments: movieId);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,8 +67,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         actions: [
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: () =>
-                Navigator.pushNamed(context, Navigation.SearchPage),
+            onPressed: () => Navigator.pushNamed(
+              context,
+              Navigation.SearchPage,
+            ),
           ),
           IconButton(
             icon: Icon(
@@ -67,7 +79,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             onPressed: () {},
           ),
         ],
-        leading: Icon(Icons.motion_photos_on_rounded),
+        leading: Icon(
+          Icons.motion_photos_on_rounded,
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -82,8 +96,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: Transform.scale(
                         scale: 0.7,
                         child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -115,8 +130,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: Transform.scale(
                         scale: 0.7,
                         child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -144,8 +160,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: Transform.scale(
                         scale: 0.7,
                         child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -169,8 +186,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: Transform.scale(
                         scale: 0.7,
                         child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -180,7 +198,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 } else {
                   return Text(
                     'Failed Get Data Upcoming Movies',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   );
                 }
               },
@@ -225,13 +245,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   _buildTabbar() {
     return TabBar(
-      labelStyle: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600),
       controller: _tabController,
       onTap: (index) => _getGenreListById(index),
       labelColor: Colors.white,
       indicatorWeight: 3,
       indicatorColor: Colors.white,
       isScrollable: true,
+      labelStyle: TextStyle(
+        fontSize: 12.0,
+        fontWeight: FontWeight.w600,
+      ),
       tabs: genres.map(
         (item) {
           return Tab(
@@ -251,17 +274,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         children: genres.map(
           (item) {
             return ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
               scrollDirection: Axis.horizontal,
               itemCount: genreListMovies.length,
               itemBuilder: (context, index) {
-                var data = genreListMovies[index];
+                MovieList data = genreListMovies[index];
                 return MovieCard(
                   title: data.title,
                   poster: data.posterPath,
                   rating: data.voteAverage,
+                  onTap: () => _onPressMovie(data.id),
                 );
               },
+              padding: EdgeInsets.symmetric(
+                horizontal: 12.0,
+              ),
             );
           },
         ).toList(),
@@ -279,17 +305,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         Container(
           height: 250,
           child: ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
             scrollDirection: Axis.horizontal,
             itemCount: topRatedMovies.length,
             itemBuilder: (context, index) {
-              var data = topRatedMovies[index];
+              MovieList data = topRatedMovies[index];
               return MovieCard(
                 title: data.title,
                 poster: data.posterPath,
                 rating: data.voteAverage,
+                onTap: () => _onPressMovie(data.id),
               );
             },
+            padding: EdgeInsets.symmetric(
+              horizontal: 12.0,
+            ),
           ),
         ),
       ],
@@ -306,17 +335,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         Container(
           height: 250,
           child: ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
             scrollDirection: Axis.horizontal,
             itemCount: upcomingMovies.length,
             itemBuilder: (context, index) {
-              var data = upcomingMovies[index];
+              MovieList data = upcomingMovies[index];
               return MovieCard(
                 title: data.title,
                 poster: data.posterPath,
                 rating: data.voteAverage,
+                onTap: () => _onPressMovie(data.id),
               );
             },
+            padding: EdgeInsets.symmetric(
+              horizontal: 12.0,
+            ),
           ),
         ),
       ],

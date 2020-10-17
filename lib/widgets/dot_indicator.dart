@@ -22,7 +22,10 @@ class DotIndicator extends StatelessWidget {
           return Container(
             width: 5.0,
             height: 5.0,
-            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 3.0),
+            margin: EdgeInsets.symmetric(
+              vertical: 10.0,
+              horizontal: 3.0,
+            ),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: currentIndex == index

@@ -13,33 +13,64 @@ class MovieCard extends StatelessWidget {
     @required this.title,
     @required this.poster,
     @required this.rating,
-    this.onTap,
+    @required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 8.0, right: 12.0),
-      child: InkWell(
-        splashColor: Color.fromRGBO(0, 0, 0, 0.6),
-        highlightColor: Color.fromRGBO(0, 0, 0, 0.2),
-        onTap: () {},
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.only(
+          top: 8.0,
+          right: 12.0,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(2.0)),
-              child: Image.network(
-                '${Config.baseImageUrl}$poster',
-                fit: BoxFit.cover,
-                width: 120.0,
-                height: 180.0,
+              borderRadius: BorderRadius.all(
+                Radius.circular(2.0),
+              ),
+              child: Stack(
+                children: [
+                  Image.network(
+                    '${Config.baseImageUrl}$poster',
+                    fit: BoxFit.cover,
+                    width: 120.0,
+                    height: 180.0,
+                  ),
+                  Positioned.fill(
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor: Color.fromRGBO(
+                          0,
+                          0,
+                          0,
+                          0.3,
+                        ),
+                        highlightColor: Color.fromRGBO(
+                          0,
+                          0,
+                          0,
+                          0.1,
+                        ),
+                        onTap: onTap,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 120),
+              constraints: BoxConstraints(
+                maxWidth: 120,
+              ),
               child: Container(
-                padding: EdgeInsets.only(top: 8.0),
+                padding: EdgeInsets.only(
+                  top: 8.0,
+                ),
                 child: Text(
                   title,
                   overflow: TextOverflow.ellipsis,
@@ -54,7 +85,9 @@ class MovieCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 8.0),
+              padding: EdgeInsets.only(
+                top: 8.0,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -67,7 +100,9 @@ class MovieCard extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 4.0),
+                    padding: EdgeInsets.only(
+                      left: 4.0,
+                    ),
                     child: RatingBar(
                       onRatingUpdate: null,
                       itemCount: 5,
