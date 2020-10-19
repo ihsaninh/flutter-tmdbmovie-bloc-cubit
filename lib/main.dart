@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:movie_app/blocs/moviedetail/movie_detail_cubit.dart';
 
 import 'package:movie_app/screens/movie_home.dart';
 import 'package:movie_app/configs/routes.dart';
@@ -55,7 +56,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<UpcomingMovieCubit>(
           create: (context) => UpcomingMovieCubit()..getUpcomingMovies(),
-        )
+        ),
+        BlocProvider<MovieDetailCubit>(
+          create: (context) => MovieDetailCubit(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

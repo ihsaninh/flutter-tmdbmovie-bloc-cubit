@@ -14,4 +14,6 @@ class Config {
       '$baseUrl/search/movie?api_key=$apiKey&language=en-US&page=1&include_adult=false';
   static String upcomingMovieUrl =
       '$baseUrl/movie/upcoming?api_key=$apiKey&language=en-US&page=1';
+  static movieDetailUrl(int movieId) =>
+      '$baseUrl/movie/$movieId?api_key=$apiKey&append_to_response=images';
 }
