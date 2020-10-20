@@ -198,6 +198,7 @@ class _MovieHomeState extends State<MovieHome>
           return CarouselItem(
             avatar: item.backdropPath,
             title: item.title,
+            onTap: () => _onPressMovie(item.id),
           );
         },
       ).toList(),

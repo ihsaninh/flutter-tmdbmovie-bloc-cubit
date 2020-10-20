@@ -36,6 +36,7 @@ dependencies:
   flutter_rating_bar: ^3.0.1+1
   flutter_config: ^1.0.7
   intl: ^0.16.1
+  url_launcher: ^5.7.5
 
 dev_dependencies:
   flutter_test:

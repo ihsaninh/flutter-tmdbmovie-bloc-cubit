@@ -1,13 +1,17 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:movie_app/blocs/moviedetail/movie_detail_cubit.dart';
-import 'package:movie_app/configs/configs.dart';
-import 'package:movie_app/models/movie_detail.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
 import 'package:movie_app/utils/helpers.dart';
+import 'package:movie_app/configs/configs.dart';
+import 'package:movie_app/constants/colors.dart';
+import 'package:movie_app/models/movie_detail.dart';
 import 'package:movie_app/widgets/carousel_item.dart';
 import 'package:movie_app/widgets/custom_appbar.dart';
+import 'package:movie_app/blocs/moviedetail/movie_detail_cubit.dart';
+
+List<String> popupMenuItem = ['Share', 'Visit Website'];
 
 class DetailMovie extends StatefulWidget {
   final int movieId;
@@ -22,6 +26,14 @@ class _DetailMovieState extends State<DetailMovie> {
   void initState() {
     context.bloc<MovieDetailCubit>().getMovieDetail(widget.movieId);
     super.initState();
+  }
+
+  _onSelectedPopupMenu(String value, String homePage) {
+    if (value == 'Share') {
+      return null;
+    } else {
+     return Helper.launchUrl(homePage);
+    }
   }
 
   @override
@@ -99,13 +111,24 @@ class _DetailMovieState extends State<DetailMovie> {
               ),
               Expanded(
                 flex: 1,
-                child: IconButton(
-                  splashRadius: 20.0,
-                  icon: Icon(
-                    Icons.more_vert,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
+                child: PopupMenuButton(
+                  color: ColorBase.martinique,
+                  offset: Offset(0, 40),
+                  icon: Icon(Icons.more_vert, color: Colors.white),
+                  tooltip: 'More options',
+                  elevation: 5,
+                  onSelected: (value) => _onSelectedPopupMenu(value, data.homepage),
+                  itemBuilder: (context) => popupMenuItem.map((menu) {
+                    return PopupMenuItem(
+                      value: menu,
+                      child: Text(
+                        menu,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
             ],
@@ -138,13 +161,14 @@ class _DetailMovieState extends State<DetailMovie> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-              flex: 1,
-              child: Image.network(
-                "${Config.baseImageUrl}${data.posterPath}",
-                height: 180.0,
-                width: 120.0,
-                fit: BoxFit.fill,
-              )),
+            flex: 1,
+            child: Image.network(
+              "${Config.baseImageUrl}${data.posterPath}",
+              height: 180.0,
+              width: 120.0,
+              fit: BoxFit.fill,
+            ),
+          ),
           Expanded(
             flex: 2,
             child: Padding(
