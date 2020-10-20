@@ -6,6 +6,7 @@ import 'package:movie_app/constants/navigation.dart';
 import 'package:movie_app/models/genre.dart';
 import 'package:movie_app/models/movie_list.dart';
 import 'package:movie_app/widgets/carousel_item.dart';
+import 'package:movie_app/widgets/custom_appbar.dart';
 import 'package:movie_app/widgets/dot_indicator.dart';
 import 'package:movie_app/widgets/movie_card.dart';
 import 'package:movie_app/widgets/section_header.dart';
@@ -61,28 +62,7 @@ class _MovieHomeState extends State<MovieHome>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Movie'),
-        elevation: 0.0,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () => Navigator.pushNamed(
-              context,
-              Navigation.SearchPage,
-            ),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-            ),
-            onPressed: () {},
-          ),
-        ],
-        leading: Icon(
-          Icons.motion_photos_on_rounded,
-        ),
-      ),
+      appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -271,26 +251,24 @@ class _MovieHomeState extends State<MovieHome>
       child: TabBarView(
         physics: NeverScrollableScrollPhysics(),
         controller: _tabController,
-        children: genres.map(
-          (item) {
-            return ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: genreListMovies.length,
-              itemBuilder: (context, index) {
-                MovieList data = genreListMovies[index];
-                return MovieCard(
-                  title: data.title,
-                  poster: data.posterPath,
-                  rating: data.voteAverage,
-                  onTap: () => _onPressMovie(data.id),
-                );
-              },
-              padding: EdgeInsets.symmetric(
-                horizontal: 12.0,
-              ),
-            );
-          },
-        ).toList(),
+        children: genres.map((item) {
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: genreListMovies.length,
+            itemBuilder: (context, index) {
+              MovieList data = genreListMovies[index];
+              return MovieCard(
+                title: data.title,
+                poster: data.posterPath,
+                rating: data.voteAverage,
+                onTap: () => _onPressMovie(data.id),
+              );
+            },
+            padding: EdgeInsets.symmetric(
+              horizontal: 12.0,
+            ),
+          );
+        }).toList(),
       ),
     );
   }

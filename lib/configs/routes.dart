@@ -14,7 +14,7 @@ Route generateRoutes(RouteSettings settings) {
     case Navigation.SearchPage:
       return buildRoute(settings, SearchPage());
     case Navigation.MovieDetail:
-      return buildRoute(settings, MovieDetail(movieId: args));
+      return buildRoute(settings, DetailMovie(movieId: args));
     default:
       return null;
   }

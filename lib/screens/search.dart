@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/constants/navigation.dart';
 
 import 'package:movie_app/utils/debouncer.dart';
 import 'package:movie_app/widgets/list_tile_search.dart';
@@ -34,6 +35,12 @@ class _SearchPageState extends State<SearchPage> {
   void _onPressClear() {
     _textFieldController.clear();
     context.bloc<SearchMovieCubit>().reset();
+  }
+
+  void _onPressMovie(int movieId) {
+    if (movieId != null) {
+      Navigator.pushNamed(context, Navigation.MovieDetail, arguments: movieId);
+    }
   }
 
   @override
@@ -71,6 +78,7 @@ class _SearchPageState extends State<SearchPage> {
                   poster: data.posterPath,
                   title: data.title,
                   date: data.releaseDate,
+                  onTap: () => _onPressMovie(data.id),
                 );
               },
             );

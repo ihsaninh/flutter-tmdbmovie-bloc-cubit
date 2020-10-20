@@ -14,24 +14,25 @@ class CarouselItem extends StatelessWidget {
       child: Container(
         child: Stack(
           children: <Widget>[
-            Image.network(
-              '${Config.baseImageUrl}$avatar',
-              fit: BoxFit.cover,
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                height: 100,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    end: Alignment(0.0, -1),
-                    begin: Alignment(0.0, 0.4),
-                    colors: <Color>[
-                      Colors.black,
-                      Colors.black.withOpacity(0.0)
-                    ],
+            ShaderMask(
+              shaderCallback: (rect) {
+                return LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.black, Colors.transparent],
+                ).createShader(
+                  Rect.fromLTRB(
+                    0,
+                    0,
+                    rect.width,
+                    rect.height,
                   ),
-                ),
+                );
+              },
+              blendMode: BlendMode.dstIn,
+              child: Image.network(
+                '${Config.baseImageUrl}$avatar',
+                fit: BoxFit.cover,
               ),
             ),
             Positioned(

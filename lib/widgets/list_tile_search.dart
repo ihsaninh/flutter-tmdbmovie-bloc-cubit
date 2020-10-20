@@ -6,17 +6,19 @@ class ListTileSearch extends StatelessWidget {
   final String poster;
   final String title;
   final String date;
+  final Function onTap;
 
   ListTileSearch({
     @required this.poster,
     @required this.title,
     @required this.date,
+    @required this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
+      onTap: onTap,
       leading: Container(
         height: 200,
         child: Image.network(

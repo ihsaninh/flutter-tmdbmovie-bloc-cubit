@@ -35,6 +35,7 @@ dependencies:
   equatable: ^1.2.5
   flutter_rating_bar: ^3.0.1+1
   flutter_config: ^1.0.7
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:
