@@ -4,11 +4,17 @@ class SectionHeader extends StatelessWidget {
   final String title;
   final String subtitle;
   final Function onTap;
+  final double titleFontSize;
+  final FontWeight titleFontWeight;
+  final double subtitleFontSize;
 
   SectionHeader({
     @required this.title,
     @required this.subtitle,
     this.onTap,
+    this.titleFontSize = 14.0,
+    this.titleFontWeight = FontWeight.w600,
+    this.subtitleFontSize = 13.0,
   });
 
   @override
@@ -26,15 +32,15 @@ class SectionHeader extends StatelessWidget {
           Text(
             title.toUpperCase(),
             style: TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w600,
+              fontSize: titleFontSize,
+              fontWeight: titleFontWeight,
               color: Colors.white70,
             ),
           ),
           Text(
             subtitle.toUpperCase(),
             style: TextStyle(
-              fontSize: 12.0,
+              fontSize: subtitleFontSize,
               fontWeight: FontWeight.w600,
               color: Colors.white70,
             ),

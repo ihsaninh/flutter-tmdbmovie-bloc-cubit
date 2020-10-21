@@ -8,11 +8,13 @@ class MovieCard extends StatelessWidget {
   final String poster;
   final double rating;
   final Function onTap;
+  final String subtitle;
 
   MovieCard({
     @required this.title,
     @required this.poster,
-    @required this.rating,
+    this.rating,
+    this.subtitle,
     @required this.onTap,
   });
 
@@ -34,12 +36,22 @@ class MovieCard extends StatelessWidget {
               ),
               child: Stack(
                 children: [
-                  Image.network(
-                    '${Config.baseImageUrl}$poster',
-                    fit: BoxFit.cover,
-                    width: 120.0,
-                    height: 180.0,
-                  ),
+                  poster == null
+                      ? Container(
+                          height: 180.0,
+                          width: 120.0,
+                          child: Icon(
+                            Icons.person,
+                            size: 100,
+                            color: Colors.white24,
+                          ),
+                        )
+                      : Image.network(
+                          '${Config.baseImageUrl}$poster',
+                          fit: BoxFit.cover,
+                          width: 120.0,
+                          height: 180.0,
+                        ),
                   Positioned.fill(
                     child: Material(
                       color: Colors.transparent,
@@ -84,38 +96,46 @@ class MovieCard extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: 8.0,
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: 120,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    rating.toString(),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 4.0,
-                    ),
-                    child: RatingBar(
-                      onRatingUpdate: null,
-                      itemCount: 5,
-                      ignoreGestures: true,
-                      itemSize: 12.0,
-                      initialRating: rating / 2,
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: 4.0,
+                ),
+                child: rating == null
+                    ? Text(
+                        subtitle,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 13.0,
+                          color: Colors.white70,
+                          height: 1.3,
+                        ),
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: 4.0,
+                            ),
+                            child: RatingBar(
+                              onRatingUpdate: null,
+                              itemCount: 5,
+                              ignoreGestures: true,
+                              itemSize: 12.0,
+                              initialRating: rating / 2,
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                ],
               ),
             ),
           ],

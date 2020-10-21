@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:movie_app/blocs/moviecast/movie_cast_cubit.dart';
+import 'package:movie_app/models/movie_cast.dart';
 
 import 'package:movie_app/utils/helpers.dart';
 import 'package:movie_app/configs/configs.dart';
@@ -10,6 +12,8 @@ import 'package:movie_app/models/movie_detail.dart';
 import 'package:movie_app/widgets/carousel_item.dart';
 import 'package:movie_app/widgets/custom_appbar.dart';
 import 'package:movie_app/blocs/moviedetail/movie_detail_cubit.dart';
+import 'package:movie_app/widgets/movie_card.dart';
+import 'package:movie_app/widgets/section_header.dart';
 
 List<String> popupMenuItem = ['Share', 'Visit Website'];
 
@@ -25,6 +29,7 @@ class _DetailMovieState extends State<DetailMovie> {
   @override
   void initState() {
     context.bloc<MovieDetailCubit>().getMovieDetail(widget.movieId);
+    context.bloc<MovieCastCubit>().getMovieCast(widget.movieId);
     super.initState();
   }
 
@@ -32,7 +37,7 @@ class _DetailMovieState extends State<DetailMovie> {
     if (value == 'Share') {
       return null;
     } else {
-     return Helper.launchUrl(homePage);
+      return Helper.launchUrl(homePage);
     }
   }
 
@@ -40,34 +45,40 @@ class _DetailMovieState extends State<DetailMovie> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      body: BlocBuilder<MovieDetailCubit, MovieDetailState>(
-          builder: (context, state) {
-        if (state is MovieDetailLoadInProgress) {
-          return Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                Colors.white,
+      body: SingleChildScrollView(
+        child: BlocBuilder<MovieDetailCubit, MovieDetailState>(
+            builder: (context, state) {
+          if (state is MovieDetailLoadInProgress) {
+            return Container(
+              height: MediaQuery.of(context).size.height * 0.8,
+              child: Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Colors.white,
+                  ),
+                ),
               ),
-            ),
-          );
-        } else if (state is MovieDetailLoadSuccess) {
-          MovieDetail data = state.movieDetail;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _featuredImages(data.images.backdrops),
-              _movieTitleInfo(data),
-              _divider(),
-              _movieDescInfo(data),
-              _divider(),
-              _movieInfoStatus(data),
-              _divider(),
-            ],
-          );
-        } else {
-          return Container();
-        }
-      }),
+            );
+          } else if (state is MovieDetailLoadSuccess) {
+            MovieDetail data = state.movieDetail;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _featuredImages(data.images.backdrops),
+                _movieTitleInfo(data),
+                _divider(),
+                _movieDescInfo(data),
+                _divider(),
+                _movieInfoStatus(data),
+                _divider(),
+                _movieCast(),
+              ],
+            );
+          } else {
+            return Container();
+          }
+        }),
+      ),
     );
   }
 
@@ -117,7 +128,8 @@ class _DetailMovieState extends State<DetailMovie> {
                   icon: Icon(Icons.more_vert, color: Colors.white),
                   tooltip: 'More options',
                   elevation: 5,
-                  onSelected: (value) => _onSelectedPopupMenu(value, data.homepage),
+                  onSelected: (value) =>
+                      _onSelectedPopupMenu(value, data.homepage),
                   itemBuilder: (context) => popupMenuItem.map((menu) {
                     return PopupMenuItem(
                       value: menu,
@@ -360,11 +372,54 @@ class _DetailMovieState extends State<DetailMovie> {
     );
   }
 
+  Widget _movieCast() {
+    return Column(
+      children: [
+        SectionHeader(
+          title: 'Popular Casts',
+          subtitle: 'See All',
+          titleFontSize: 18.0,
+          titleFontWeight: FontWeight.w400,
+          subtitleFontSize: 14.0,
+        ),
+        BlocBuilder<MovieCastCubit, MovieCastState>(
+          builder: (context, state) {
+            if (state is MovieCastLoadInProgress) {
+              return CircularProgressIndicator();
+            } else if (state is MovieCastLoadSuccess) {
+              int count = state.movieCasts.cast.length > 15
+                  ? 15
+                  : state.movieCasts.cast.length;
+              return Container(
+                height: 250,
+                child: ListView.builder(
+                  padding: EdgeInsets.only(left: 12.0),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: count,
+                  itemBuilder: (context, index) {
+                    Cast data = state.movieCasts.cast[index];
+                    return MovieCard(
+                      title: data.name,
+                      poster: data.profilePath,
+                      subtitle: data.character,
+                      onTap: () {},
+                    );
+                  },
+                ),
+              );
+            } else {
+              return Container();
+            }
+          },
+        )
+      ],
+    );
+  }
+
   Widget _divider() {
     return Divider(
       color: Colors.white12,
       thickness: 1,
-      endIndent: 0,
     );
   }
 }

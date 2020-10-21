@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:movie_app/models/movie_detail.dart';
-import 'package:movie_app/repositories/movie_detail.dart';
+import 'package:movie_app/repositories/movie_detail_repository.dart';
 
 part 'movie_detail_state.dart';
 

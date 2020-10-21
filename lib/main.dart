@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_config/flutter_config.dart';
-import 'package:movie_app/blocs/moviedetail/movie_detail_cubit.dart';
 
 import 'package:movie_app/screens/movie_home.dart';
 import 'package:movie_app/configs/routes.dart';
@@ -13,6 +12,8 @@ import 'package:movie_app/blocs/popularmovie/popular_movie_cubit.dart';
 import 'package:movie_app/blocs/topratedmovie/top_rated_movie_cubit.dart';
 import 'package:movie_app/blocs/genremovielist/genre_movie_list_cubit.dart';
 import 'package:movie_app/blocs/upcomingmovie/upcoming_movie_cubit.dart';
+import 'package:movie_app/blocs/moviecast/movie_cast_cubit.dart';
+import 'package:movie_app/blocs/moviedetail/movie_detail_cubit.dart';
 
 class MyBlocObserver extends BlocObserver {
   @override
@@ -59,6 +60,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<MovieDetailCubit>(
           create: (context) => MovieDetailCubit(),
+        ),
+        BlocProvider<MovieCastCubit>(
+          create: (context) => MovieCastCubit(),
         ),
       ],
       child: MaterialApp(
