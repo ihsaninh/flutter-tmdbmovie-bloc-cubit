@@ -41,7 +41,7 @@ Movie DB is an application to show all movies in the world. The data is provide 
    ```
 
 ## Screenshot
-<div align="center">
+<div>
     <img width="300" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss1.jpg">
     <img width="300" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss2.jpg">  
     <img width="300" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss3.jpg">
