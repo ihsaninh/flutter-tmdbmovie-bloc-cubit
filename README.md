@@ -42,13 +42,13 @@ Movie DB is an application to show all movies in the world. The data is provide 
 
 ## Screenshot
 <div>
-    <img width="300" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss1.jpg">
-    <img width="300" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss2.jpg">  
-    <img width="300" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss3.jpg">
-    <img width="300" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss4.jpg">
-    <img width="300" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss5.jpg">
-    <img width="300" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss6.jpg">
-    <img width="300" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss7.jpg">
+    <img width="250" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss1.jpg">
+    <img width="250" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss2.jpg">  
+    <img width="250" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss3.jpg">
+    <img width="250" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss4.jpg">
+    <img width="250" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss5.jpg">
+    <img width="250" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss6.jpg">
+    <img width="250" src="https://github.com/ihsaninh/flutter-tmdbmovie-bloc-cubit/blob/master/screenshoots/ss7.jpg">
 </div>
 
 
