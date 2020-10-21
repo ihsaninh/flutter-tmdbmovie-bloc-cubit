@@ -20,9 +20,7 @@ Movie DB is an application to show all movies in the world. The data is provide 
 * And more
 
 ## Requirements
-* [`npm`](https://www.npmjs.com/get-npm) or [`yarn`](https://yarnpkg.com/) 
-* [`react native`](https://facebook.github.io/react-native)
-* [`react navigation`](https://reactnavigation.org/)
+* [`Flutter`](http://flutter.dev/) 
 
 
 ## How To Run
