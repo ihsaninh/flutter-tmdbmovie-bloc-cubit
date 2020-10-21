@@ -10,12 +10,13 @@
 - [Author](#author)
 
 ## Introduction
-Movie DB is an application to show all movies in the world. Its only support Indonesian language. The data is provide by API from <a href="https://www.themoviedb.org/documentation/api">TMDB Movie</a>.
+Movie DB is an application to show all movies in the world. The data is provide by API from <a href="https://www.themoviedb.org/documentation/api">TMDB Movie</a>.
 
 
 ## Features
 * User can see all Movie like upcoming movie, top rated movie, popular movie, and more
 * User can see detail movie like decsription, movie casts, rating, and more.
+* Search movie based movie name.
 * And more
 
 ## Requirements
