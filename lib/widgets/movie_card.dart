@@ -118,6 +118,14 @@ class MovieCard extends StatelessWidget {
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          Text(
+                            rating.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13.0,
+                              color: Colors.white,
+                            ),
+                          ),
                           Padding(
                             padding: EdgeInsets.only(
                               left: 4.0,

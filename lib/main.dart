@@ -17,14 +17,27 @@ import 'package:movie_app/blocs/moviedetail/movie_detail_cubit.dart';
 
 class MyBlocObserver extends BlocObserver {
   @override
-  void onTransition(Bloc bloc, Transition transition) {
-    super.onTransition(bloc, transition);
-    print(transition);
+  void onCreate(Cubit cubit) {
+    super.onCreate(cubit);
+    print('onCreate -- cubit: ${cubit.runtimeType}');
   }
 
+  @override
+  void onChange(Cubit cubit, Change change) {
+    super.onChange(cubit, change);
+    print('onChange -- cubit: ${cubit.runtimeType}, change: $change');
+  }
+
+  @override
   void onError(Cubit cubit, Object error, StackTrace stackTrace) {
-    print('$error, $stackTrace');
+    print('onError -- cubit: ${cubit.runtimeType}, error: $error');
     super.onError(cubit, error, stackTrace);
+  }
+
+  @override
+  void onClose(Cubit cubit) {
+    super.onClose(cubit);
+    print('onClose -- cubit: ${cubit.runtimeType}');
   }
 }
 
