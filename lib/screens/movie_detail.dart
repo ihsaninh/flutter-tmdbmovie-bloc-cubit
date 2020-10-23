@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:movie_app/blocs/moviecast/movie_cast_cubit.dart';
-import 'package:movie_app/models/movie_cast.dart';
 
+import 'package:movie_app/constants/navigation.dart';
+import 'package:movie_app/models/movie_cast.dart';
+import 'package:movie_app/models/movie_list.dart';
 import 'package:movie_app/utils/helpers.dart';
 import 'package:movie_app/configs/configs.dart';
 import 'package:movie_app/constants/colors.dart';
@@ -12,6 +13,8 @@ import 'package:movie_app/models/movie_detail.dart';
 import 'package:movie_app/widgets/carousel_item.dart';
 import 'package:movie_app/widgets/custom_appbar.dart';
 import 'package:movie_app/blocs/moviedetail/movie_detail_cubit.dart';
+import 'package:movie_app/blocs/moviecast/movie_cast_cubit.dart';
+import 'package:movie_app/blocs/similiarmovie/similiar_movie_cubit.dart';
 import 'package:movie_app/widgets/movie_card.dart';
 import 'package:movie_app/widgets/section_header.dart';
 
@@ -30,6 +33,7 @@ class _DetailMovieState extends State<DetailMovie> {
   void initState() {
     context.bloc<MovieDetailCubit>().getMovieDetail(widget.movieId);
     context.bloc<MovieCastCubit>().getMovieCast(widget.movieId);
+    context.bloc<SimiliarMovieCubit>().getSimiliarMovies(widget.movieId);
     super.initState();
   }
 
@@ -41,10 +45,18 @@ class _DetailMovieState extends State<DetailMovie> {
     }
   }
 
+  void _onPressMovie(int movieId) {
+    if (movieId != null) {
+      Navigator.pushNamed(context, Navigation.MovieDetail, arguments: movieId);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(
+        showSearchButton: false,
+      ),
       body: SingleChildScrollView(
         child: BlocBuilder<MovieDetailCubit, MovieDetailState>(
             builder: (context, state) {
@@ -72,6 +84,7 @@ class _DetailMovieState extends State<DetailMovie> {
                 _movieInfoStatus(data),
                 _divider(),
                 _movieCast(),
+                _similiarMovie(),
               ],
             );
           } else {
@@ -413,6 +426,47 @@ class _DetailMovieState extends State<DetailMovie> {
           },
         )
       ],
+    );
+  }
+
+  Widget _similiarMovie() {
+    return BlocBuilder<SimiliarMovieCubit, SimiliarMovieState>(
+      builder: (context, state) {
+        if (state is SimiliarMovieLoadInProgress) {
+          return CircularProgressIndicator();
+        } else if (state is SimiliarMovieLoadSuccess) {
+          List<MovieList> similiarMovies = state.similiarMovies;
+          return similiarMovies.length > 0 ? Column(
+            children: [
+              SectionHeader(
+                title: 'Similiar Movies',
+                subtitle: 'See All',
+              ),
+              Container(
+                height: 250,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: state.similiarMovies.length,
+                  itemBuilder: (context, index) {
+                    MovieList data = state.similiarMovies[index];
+                    return MovieCard(
+                      title: data.title,
+                      poster: data.posterPath,
+                      rating: data.voteAverage,
+                      onTap: () => _onPressMovie(data.id),
+                    );
+                  },
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.0,
+                  ),
+                ),
+              ),
+            ],
+          ) : Container();
+        } else {
+          return Container();
+        }
+      },
     );
   }
 

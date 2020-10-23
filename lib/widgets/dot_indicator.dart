@@ -29,7 +29,7 @@ class DotIndicator extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: currentIndex == index
-                  ? ColorBase.mandy
+                  ? Colors.white
                   : Color.fromRGBO(255, 255, 255, 0.4),
             ),
           );

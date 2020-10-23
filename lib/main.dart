@@ -12,6 +12,7 @@ import 'package:movie_app/blocs/popularmovie/popular_movie_cubit.dart';
 import 'package:movie_app/blocs/topratedmovie/top_rated_movie_cubit.dart';
 import 'package:movie_app/blocs/genremovielist/genre_movie_list_cubit.dart';
 import 'package:movie_app/blocs/upcomingmovie/upcoming_movie_cubit.dart';
+import 'package:movie_app/blocs/similiarmovie/similiar_movie_cubit.dart';
 import 'package:movie_app/blocs/moviecast/movie_cast_cubit.dart';
 import 'package:movie_app/blocs/moviedetail/movie_detail_cubit.dart';
 
@@ -77,12 +78,15 @@ class MyApp extends StatelessWidget {
         BlocProvider<MovieCastCubit>(
           create: (context) => MovieCastCubit(),
         ),
+        BlocProvider<SimiliarMovieCubit>(
+          create: (context) => SimiliarMovieCubit(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: ColorBase.primary,
-          accentColor: Colors.white10,
+          accentColor: ColorBase.primary,
           accentColorBrightness: Brightness.light,
           scaffoldBackgroundColor: ColorBase.primary,
         ),

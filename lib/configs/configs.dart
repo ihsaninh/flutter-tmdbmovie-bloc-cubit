@@ -18,4 +18,5 @@ class Config {
       '$baseUrl/movie/$movieId?api_key=$apiKey&append_to_response=images';
   static movieCreditlUrl(int movieId) =>
       '$baseUrl/movie/$movieId/credits?api_key=$apiKey';
+  static similiarMovieUrl(int movieId) => '$baseUrl/movie/$movieId/similar?api_key=$apiKey&page=1';
 }
