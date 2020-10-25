@@ -37,6 +37,7 @@ dependencies:
   flutter_config: ^1.0.7
   intl: ^0.16.1
   url_launcher: ^5.7.5
+  marquee: ^1.6.1
 
 dev_dependencies:
   flutter_test:

@@ -12,8 +12,8 @@ import 'package:movie_app/constants/colors.dart';
 import 'package:movie_app/models/movie_detail.dart';
 import 'package:movie_app/widgets/carousel_item.dart';
 import 'package:movie_app/widgets/custom_appbar.dart';
-import 'package:movie_app/blocs/moviedetail/movie_detail_cubit.dart';
 import 'package:movie_app/blocs/moviecast/movie_cast_cubit.dart';
+import 'package:movie_app/blocs/moviedetail/movie_detail_cubit.dart';
 import 'package:movie_app/blocs/similiarmovie/similiar_movie_cubit.dart';
 import 'package:movie_app/widgets/movie_card.dart';
 import 'package:movie_app/widgets/section_header.dart';
@@ -29,6 +29,8 @@ class DetailMovie extends StatefulWidget {
 }
 
 class _DetailMovieState extends State<DetailMovie> {
+  ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     context.bloc<MovieDetailCubit>().getMovieDetail(widget.movieId);
@@ -122,14 +124,18 @@ class _DetailMovieState extends State<DetailMovie> {
             children: [
               Expanded(
                 flex: 8,
-                child: Text(
-                  data.title,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontSize: 28.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w300,
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  scrollDirection: Axis.horizontal,
+                  child: Text(
+                    data.title,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontSize: 28.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
                 ),
               ),
@@ -256,7 +262,7 @@ class _DetailMovieState extends State<DetailMovie> {
 
   Widget _movieInfoStatus(MovieDetail data) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Row(
         children: [
           Flexible(
@@ -436,33 +442,35 @@ class _DetailMovieState extends State<DetailMovie> {
           return CircularProgressIndicator();
         } else if (state is SimiliarMovieLoadSuccess) {
           List<MovieList> similiarMovies = state.similiarMovies;
-          return similiarMovies.length > 0 ? Column(
-            children: [
-              SectionHeader(
-                title: 'Similiar Movies',
-                subtitle: 'See All',
-              ),
-              Container(
-                height: 250,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: state.similiarMovies.length,
-                  itemBuilder: (context, index) {
-                    MovieList data = state.similiarMovies[index];
-                    return MovieCard(
-                      title: data.title,
-                      poster: data.posterPath,
-                      rating: data.voteAverage,
-                      onTap: () => _onPressMovie(data.id),
-                    );
-                  },
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.0,
-                  ),
-                ),
-              ),
-            ],
-          ) : Container();
+          return similiarMovies.length > 0
+              ? Column(
+                  children: [
+                    SectionHeader(
+                      title: 'Similiar Movies',
+                      subtitle: 'See All',
+                    ),
+                    Container(
+                      height: 250,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: state.similiarMovies.length,
+                        itemBuilder: (context, index) {
+                          MovieList data = state.similiarMovies[index];
+                          return MovieCard(
+                            title: data.title,
+                            poster: data.posterPath,
+                            rating: data.voteAverage,
+                            onTap: () => _onPressMovie(data.id),
+                          );
+                        },
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : Container();
         } else {
           return Container();
         }

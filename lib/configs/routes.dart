@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:movie_app/constants/navigation.dart';
 import 'package:movie_app/screens/movie_detail.dart';
@@ -20,8 +20,8 @@ Route generateRoutes(RouteSettings settings) {
   }
 }
 
-MaterialPageRoute buildRoute(RouteSettings settings, Widget builder) {
-  return MaterialPageRoute(
+CupertinoPageRoute buildRoute(RouteSettings settings, Widget builder) {
+  return CupertinoPageRoute(
     settings: settings,
     builder: (BuildContext context) => builder,
   );
